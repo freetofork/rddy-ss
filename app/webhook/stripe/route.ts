@@ -2,7 +2,6 @@ import { db } from '@/utils/db/db'
 import { usersTable, licenseKeysTable } from '@/utils/db/schema'
 import { eq } from "drizzle-orm";
 
-// Helper to generate a 16-character license key (XXXX-XXXX-XXXX-XXXX)
 function generateLicenseKey() {
     const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
     let key = '';
@@ -16,38 +15,38 @@ function generateLicenseKey() {
 export async function POST(req: Request) {
     try {
         const event = await req.json()
+        console.log(`Webhook received event: ${event.type}`);
 
         switch (event.type) {
-            // Add this case to handle the checkout completion
             case 'checkout.session.completed': {
                 const session = event.data.object;
                 const email = session.customer_details?.email;
                 if (email) {
                     const licenseKey = generateLicenseKey();
                     await db.insert(licenseKeysTable).values({
-                        id: crypto.randomUUID(), // Works in Node.js 19+ / Web APIs
+                        id: crypto.randomUUID(),
                         key: licenseKey,
                         email: email,
-                        is_used: false
                     });
-                    console.log(`Generated license key ${licenseKey} for ${email}`);
-                    // Suggestion: If you set up an email service later, call it here!
+                    console.log(`SUCCESS: Generated license key ${licenseKey} for ${email}`);
+                } else {
+                    console.error("ERROR: No email found in checkout session details");
                 }
                 break;
             }
-            case 'customer.subscription.created':
-                console.log("Subscription created")
-                await db.update(usersTable).set({ plan: event.data.object.id }).where(eq(usersTable.stripe_id, event.data.object.customer));
+            case 'customer.subscription.created': {
+                const sub = event.data.object;
+                console.log(`Subscription created for customer: ${sub.customer}`);
+                await db.update(usersTable).set({ plan: sub.id }).where(eq(usersTable.stripe_id, sub.customer));
                 break;
-            case 'customer.subscription.updated':
-            case 'customer.subscription.deleted':
-                break;
+            }
             default:
-                console.log(`Unhandled event type ${event.type}`);
+                console.log(`Info: Ignored event type ${event.type}`);
         }
 
         return new Response('Success', { status: 200 })
     } catch (err) {
+        console.error("Webhook processing error:", err);
         return new Response(`Webhook error: ${err instanceof Error ? err.message : "Unknown error"}`, {
             status: 400,
         })
