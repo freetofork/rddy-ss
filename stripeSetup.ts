@@ -130,13 +130,14 @@ async function setupWebhook(): Promise<void> {
 
     const webhooks = await stripe.webhookEndpoints.list();
     const webhookUrl = `${PUBLIC_URL}/webhook/stripe`;
-    
+
     if (!webhooks.data.some((webhook: WebhookEndpoint) => webhook.url === webhookUrl)) {
         await stripe.webhookEndpoints.create({
             enabled_events: [
                 'customer.subscription.created',
                 'customer.subscription.deleted',
-                'customer.subscription.updated'
+                'customer.subscription.updated',
+                'checkout.session.completed'
             ],
             url: webhookUrl,
         });
