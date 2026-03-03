@@ -1,11 +1,21 @@
+console.log("Starting Stripe Setup script...");
+console.log("Current NODE_ENV:", process.env.NODE_ENV);
+
 if (process.env.NODE_ENV === 'production') {
-    require('dotenv').config(); // Load from .env in production
+    require('dotenv').config();
+    console.log("Loaded .env for production");
 } else {
-    require('dotenv').config({ path: '.env.local' }); // Load from .env.local in development
+    require('dotenv').config({ path: '.env.local' });
+    console.log("Attempted to load .env.local for development");
 }
 
 const Stripe = require('stripe');
+if (!process.env.STRIPE_SECRET_KEY) {
+    console.error("CRITICAL ERROR: STRIPE_SECRET_KEY is missing from environment variables!");
+    process.exit(1);
+}
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
+console.log("Stripe client initialized.");
 
 // Types
 interface Plan {
