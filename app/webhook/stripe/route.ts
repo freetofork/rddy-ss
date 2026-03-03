@@ -49,6 +49,7 @@ export async function POST(req: Request) {
                     console.log(`[Stripe Webhook] Generating key for plan: ${planName}`);
 
                     await db.insert(licenseKeysTable).values({
+                        id: crypto.randomUUID(),
                         key: licenseKey,
                         email: email,
                         plan: planName,
