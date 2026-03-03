@@ -130,18 +130,28 @@ async function setupWebhook(): Promise<void> {
 
     const webhooks = await stripe.webhookEndpoints.list();
     const webhookUrl = `${PUBLIC_URL}/webhook/stripe`;
+    console.log(`Checking/Registering webhook URL: ${webhookUrl}`);
+    const existingWebhook = webhooks.data.find((webhook: WebhookEndpoint) => webhook.url === webhookUrl);
 
-    if (!webhooks.data.some((webhook: WebhookEndpoint) => webhook.url === webhookUrl)) {
+    const requiredEvents = [
+        'customer.subscription.created',
+        'customer.subscription.deleted',
+        'customer.subscription.updated',
+        'checkout.session.completed'
+    ];
+
+    if (!existingWebhook) {
         await stripe.webhookEndpoints.create({
-            enabled_events: [
-                'customer.subscription.created',
-                'customer.subscription.deleted',
-                'customer.subscription.updated',
-                'checkout.session.completed'
-            ],
+            enabled_events: requiredEvents,
             url: webhookUrl,
         });
-        console.log('Created webhook endpoint');
+        console.log('Created new webhook endpoint');
+    } else {
+        // Update existing webhook to ensure it has all events
+        await stripe.webhookEndpoints.update(existingWebhook.id, {
+            enabled_events: requiredEvents,
+        });
+        console.log('Updated existing webhook endpoint with latest events');
     }
 }
 
