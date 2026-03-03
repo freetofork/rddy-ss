@@ -57,6 +57,51 @@ export async function POST(req: Request) {
                     });
 
                     console.log(`[Stripe Webhook] SUCCESS: License key ${licenseKey} saved to DB for ${email}`);
+
+                    // --- NEW: SEND EMAIL VIA RESEND ---
+                    try {
+                        const resendApiKey = process.env.RESEND_API_KEY;
+                        if (!resendApiKey) {
+                            console.error("[Stripe Webhook] ERROR: RESEND_API_KEY is missing from environment variables!");
+                        } else {
+                            console.log(`[Stripe Webhook] Sending license email to ${email}...`);
+                            const emailRes = await fetch('https://api.resend.com/emails', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    'Authorization': `Bearer ${resendApiKey}`
+                                },
+                                body: JSON.stringify({
+                                    from: 'Ruddy <onboarding@resend.dev>', // You can update this once you verify a domain
+                                    to: email,
+                                    subject: 'Your Ruddy License Key',
+                                    html: `
+                                        <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #F0E6D3; border-radius: 20px; background-color: #FFF5E6;">
+                                            <h1 style="color: #4F2C1E;">Welcome to Ruddy! 🦆</h1>
+                                            <p style="font-size: 16px; color: #4F2C1E;">Your workspace is ready. Use the license key below to unlock your application:</p>
+                                            <div style="background: white; padding: 15px; border-radius: 12px; font-family: monospace; font-size: 20px; font-weight: bold; text-align: center; border: 2px dashed #1A96E8; color: #1A96E8; margin: 20px 0;">
+                                                ${licenseKey}
+                                            </div>
+                                            <p style="font-size: 14px; color: #4F2C1E; opacity: 0.7;">Plan: <strong>${planName}</strong></p>
+                                            <hr style="border: none; border-top: 1px solid #F0E6D3; margin: 20px 0;">
+                                            <p style="font-size: 12px; color: #4F2C1E; opacity: 0.5;">If you have any questions, just reply to this email.</p>
+                                        </div>
+                                    `
+                                })
+                            });
+
+                            const emailData = await emailRes.json();
+                            if (emailRes.ok) {
+                                console.log(`[Stripe Webhook] SUCCESS: Email sent! ID: ${emailData.id}`);
+                            } else {
+                                console.error("[Stripe Webhook] EMAIL FAILURE:", emailData);
+                            }
+                        }
+                    } catch (emailErr) {
+                        console.error("[Stripe Webhook] EMAIL ERROR:", emailErr);
+                        // We don't throw here because the license is already saved in DB
+                    }
+
                 } catch (dbErr) {
                     console.error("[Stripe Webhook] DATABASE ERROR:", dbErr);
                     throw dbErr; // Rethrow to trigger the 400 response
