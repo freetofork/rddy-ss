@@ -14,6 +14,10 @@ function generateLicenseKey() {
     return key;
 }
 
+export async function GET() {
+    return new Response('Stripe Webhook Endpoint is Running', { status: 200 });
+}
+
 export async function POST(req: Request) {
     try {
         const body = await req.text(); // Get raw body for potential verification later
