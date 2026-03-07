@@ -7,8 +7,8 @@ const spaceGrotesk = Space_Grotesk({ subsets: ["latin"], variable: "--font-displ
 const jetbrainsMono = JetBrains_Mono({ subsets: ["latin"], variable: "--font-mono" });
 
 export const metadata: Metadata = {
-  title: "SAAS Starter Kit",
-  description: "SAAS Starter Kit with Stripe, Supabase, Postgres",
+  title: "Ruddy",
+  description: "Query local and cloud data natively with DuckDB.",
 };
 
 export default function RootLayout({
