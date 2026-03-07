@@ -56,7 +56,7 @@ export async function signup(currentState: { message: string }, formData: FormDa
 
     // Check if user exists in our database first
     const existingDBUser = await db.select().from(usersTable).where(eq(usersTable.email, data.email))
-    
+
     if (existingDBUser.length > 0) {
         return { message: "An account with this email already exists. Please login instead." }
     }
@@ -87,14 +87,14 @@ export async function signup(currentState: { message: string }, formData: FormDa
     try {
         // create Stripe Customer Record using signup response data
         const stripeID = await createStripeCustomer(signUpData.user.id, signUpData.user.email!, data.name)
-        
+
         // Create record in DB
-        await db.insert(usersTable).values({ 
+        await db.insert(usersTable).values({
             id: signUpData.user.id,
-            name: data.name, 
-            email: signUpData.user.email!, 
-            stripe_id: stripeID, 
-            plan: 'none' 
+            name: data.name,
+            email: signUpData.user.email!,
+            stripe_id: stripeID,
+            plan: 'none'
         })
     } catch (err) {
         console.error("Error in signup:", err instanceof Error ? err.message : "Unknown error")
@@ -128,7 +128,7 @@ export async function loginUser(currentState: { message: string }, formData: For
 export async function logout() {
     const supabase = createClient()
     const { error } = await supabase.auth.signOut()
-    redirect('/login')
+    redirect('/')
 }
 
 
