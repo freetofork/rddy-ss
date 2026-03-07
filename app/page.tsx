@@ -74,6 +74,9 @@ export default async function LandingPage() {
           <a className="text-xs font-normal text-muted-foreground hover:text-foreground transition-colors" href="#pricing">
             Pricing
           </a>
+          <Link className="text-xs font-normal text-muted-foreground hover:text-foreground transition-colors" href="/login">
+            Login
+          </Link>
         </nav>
       </header>
       <main className="flex-1">
@@ -93,9 +96,6 @@ export default async function LandingPage() {
               </div>
               <div className="flex items-center gap-3 mt-4">
                 <Button>Download for macOS</Button>
-                <Button asChild variant="outline">
-                  <Link href="/login">Get Started</Link>
-                </Button>
               </div>
             </div>
             <div className="w-full md:w-2/3">
