@@ -19,31 +19,43 @@ export async function GET() {
 }
 
 export async function POST(req: Request) {
+    console.log("[Stripe Webhook] POST hit");
     try {
-        const body = await req.text(); // Get raw body for potential verification later
+        const body = await req.text();
         const event = JSON.parse(body);
-        console.log(`[Stripe Webhook] Received event: ${event.type}`);
+        console.log(`[Stripe Webhook] Event Type: ${event.type} | ID: ${event.id}`);
 
         switch (event.type) {
             case 'checkout.session.completed': {
                 const session = event.data.object as Stripe.Checkout.Session;
-                const email = session.customer_details?.email;
-                console.log(`[Stripe Webhook] Checkout completed for email: ${email}`);
+                let email = session.customer_details?.email;
+                const customerId = session.customer as string;
+
+                console.log(`[Stripe Webhook] Session: ${session.id} | Email: ${email} | Customer: ${customerId}`);
+
+                // Fallback: If email is missing in session details, fetch it from the customer object
+                if (!email && customerId) {
+                    console.log(`[Stripe Webhook] Fetching customer ${customerId} for email fallback...`);
+                    const customer = await stripe.customers.retrieve(customerId);
+                    if (!customer.deleted && 'email' in customer) {
+                        email = customer.email;
+                        console.log(`[Stripe Webhook] Found email from customer object: ${email}`);
+                    }
+                }
 
                 if (!email) {
-                    console.error("[Stripe Webhook] ERROR: No email found in checkout session details");
+                    console.error("[Stripe Webhook] ERROR: Could not determine user email for checkout session");
                     break;
                 }
 
                 try {
-                    // Fetch the session with line items to get the plan/product name
                     const expandedSession = await stripe.checkout.sessions.retrieve(session.id, {
                         expand: ['line_items.data.price.product']
                     });
 
                     const lineItem = expandedSession.line_items?.data?.[0];
                     if (!lineItem) {
-                        console.error("[Stripe Webhook] ERROR: No line items found in session");
+                        console.error("[Stripe Webhook] ERROR: No line items found in session expansion");
                         break;
                     }
 
@@ -51,7 +63,7 @@ export async function POST(req: Request) {
                     const planName = product?.name || lineItem?.description || 'Standard';
 
                     const licenseKey = generateLicenseKey();
-                    console.log(`[Stripe Webhook] Generating key for plan: ${planName}`);
+                    console.log(`[Stripe Webhook] Plan: ${planName} | License: ${licenseKey}`);
 
                     await db.insert(licenseKeysTable).values({
                         id: crypto.randomUUID(),
@@ -61,15 +73,14 @@ export async function POST(req: Request) {
                         isUsed: false
                     });
 
-                    console.log(`[Stripe Webhook] SUCCESS: License key ${licenseKey} saved to DB for ${email}`);
+                    console.log(`[Stripe Webhook] SUCCESS: License key saved for ${email}`);
 
-                    // --- SEND EMAIL VIA RESEND ---
+                    // --- SEND EMAIL ---
                     try {
                         const resendApiKey = process.env.RESEND_API_KEY;
                         if (!resendApiKey) {
                             console.error("[Stripe Webhook] ERROR: RESEND_API_KEY is missing!");
                         } else {
-                            console.log(`[Stripe Webhook] Sending license email to ${email}...`);
                             const emailRes = await fetch('https://api.resend.com/emails', {
                                 method: 'POST',
                                 headers: {
@@ -106,67 +117,64 @@ export async function POST(req: Request) {
                         console.error("[Stripe Webhook] EMAIL EXCEPTION:", emailErr);
                     }
 
-                } catch (dbErr) {
-                    console.error("[Stripe Webhook] CHECKOUT DB ERROR:", dbErr);
-                    throw dbErr;
+                } catch (err) {
+                    console.error("[Stripe Webhook] CHECKOUT PROCESSING ERROR:", err);
+                    throw err;
                 }
                 break;
             }
             case 'customer.subscription.created':
             case 'customer.subscription.updated': {
                 const sub = event.data.object as Stripe.Subscription;
-                console.log(`[Stripe Webhook] Subscription ${event.type} for customer: ${sub.customer}`);
+                const customerId = sub.customer as string;
+                console.log(`[Stripe Webhook] Sub: ${sub.id} | Event: ${event.type} | Customer: ${customerId}`);
 
-                if (!sub.customer) {
-                    console.error("[Stripe Webhook] ERROR: No customer ID in subscription event");
+                if (!customerId) {
+                    console.error("[Stripe Webhook] ERROR: No customer ID in sub event");
                     break;
                 }
 
-                // 1. Update local DB with subscription ID
+                // 1. Update local DB
                 try {
                     const result = await db.update(usersTable)
                         .set({ plan: sub.id })
-                        .where(eq(usersTable.stripe_id, sub.customer as string));
-                    console.log(`[Stripe Webhook] DB Update Result for ${sub.customer}:`, result);
+                        .where(eq(usersTable.stripe_id, customerId));
+
+                    // Log more info about the update result
+                    console.log(`[Stripe Webhook] DB Update result:`, JSON.stringify(result));
                 } catch (dbErr) {
                     console.error("[Stripe Webhook] SUBSCRIPTION DB ERROR:", dbErr);
                 }
 
-                // 2. Auto-cancel long-term plans (quarterly, semi-annual, yearly) at period end
+                // 2. Auto-cancel
                 const price = sub.items?.data?.[0]?.price;
                 if (!price) {
-                    console.warn(`[Stripe Webhook] No price info found for subscription ${sub.id}`);
+                    console.warn(`[Stripe Webhook] No price for sub ${sub.id}`);
                     break;
                 }
 
                 const interval = price.recurring?.interval;
                 const intervalCount = price.recurring?.interval_count || 1;
-
-                // isLongTerm: billed in 'year' OR billed in 'month' but > 1 (3 for quarterly, 6 for semi-annual)
                 const isLongTerm = interval === 'year' || (interval === 'month' && intervalCount > 1);
 
                 if (isLongTerm && !sub.cancel_at_period_end) {
-                    console.log(`[Stripe Webhook] Enforcing auto-cancel for ${sub.id} (${intervalCount} ${interval})`);
+                    console.log(`[Stripe Webhook] Enforcing auto-cancel for ${sub.id}`);
                     try {
-                        await stripe.subscriptions.update(sub.id, {
-                            cancel_at_period_end: true
-                        });
-                        console.log(`[Stripe Webhook] SUCCESS: Auto-cancel enabled for ${sub.id}`);
+                        await stripe.subscriptions.update(sub.id, { cancel_at_period_end: true });
+                        console.log(`[Stripe Webhook] SUCCESS: Auto-cancel enabled`);
                     } catch (stripeErr) {
-                        console.error(`[Stripe Webhook] STRIPE UPDATE ERROR for ${sub.id}:`, stripeErr);
+                        console.error(`[Stripe Webhook] STRIPE UPDATE ERROR:`, stripeErr);
                     }
                 }
                 break;
             }
             default:
-                console.log(`[Stripe Webhook] Info: Ignored event type ${event.type}`);
+                console.log(`[Stripe Webhook] Ignored event: ${event.type}`);
         }
 
-        return new Response('Success', { status: 200 })
+        return new Response('Webhook handled successfully', { status: 200 })
     } catch (err) {
-        console.error("[Stripe Webhook] CRITICAL ERROR:", err);
-        return new Response(`Webhook error: ${err instanceof Error ? err.message : "Unknown error"}`, {
-            status: 400,
-        })
+        console.error("[Stripe Webhook] CRITICAL EXCEPTION:", err);
+        return new Response(`Webhook Error: ${err instanceof Error ? err.message : "Internal Server Error"}`, { status: 400 });
     }
 }
