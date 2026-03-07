@@ -3,6 +3,7 @@ import { usersTable, licenseKeysTable } from '@/utils/db/schema'
 import { eq } from "drizzle-orm";
 import { stripe } from "@/utils/stripe/api";
 import Stripe from 'stripe';
+import crypto from 'crypto';
 
 function generateLicenseKey() {
     const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
