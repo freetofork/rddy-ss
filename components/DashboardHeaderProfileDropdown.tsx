@@ -17,7 +17,7 @@ import { generateStripeBillingPortalLink } from "@/utils/stripe/api"
 export default async function DashboardHeaderProfileDropdown() {
     const supabase = createClient()
     const { data: { user }, error } = await supabase.auth.getUser()
-    const billingPortalURL = await generateStripeBillingPortalLink(user!.email!)
+
     return (
         <nav className="flex items-center">
             <Button variant="ghost" size="icon" className="mr-2">
@@ -31,39 +31,28 @@ export default async function DashboardHeaderProfileDropdown() {
                         <span className="sr-only">Open user menu</span>
                     </Button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent align="end">
-                    <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                <DropdownMenuContent align="end" className="w-48">
+                    <DropdownMenuLabel className="font-normal">
+                        <div className="flex flex-col space-y-1">
+                            <p className="text-sm font-medium leading-none">Account</p>
+                            <p className="text-xs leading-none text-muted-foreground">
+                                {user?.email}
+                            </p>
+                        </div>
+                    </DropdownMenuLabel>
                     <DropdownMenuSeparator />
                     <Link href="#">
-                        <DropdownMenuItem>
-                            <User className="mr-2 h-4 w-4" />
-                            <span>Profile</span>
-                        </DropdownMenuItem>
-                    </Link>
-                    <Link href="#">
-                        <DropdownMenuItem>
-                            <Settings className="mr-2 h-4 w-4" />
-                            <span>Settings</span>
-                        </DropdownMenuItem>
-                    </Link>
-                    <Link href="#">
-                        <DropdownMenuItem>
-                            <ReceiptText className="mr-2 h-4 w-4" />
-                            <Link href={billingPortalURL}>Billing</Link>
-                        </DropdownMenuItem>
-                    </Link>
-                    <Link href="#">
-                        <DropdownMenuItem>
+                        <DropdownMenuItem className="cursor-pointer">
                             <HelpCircle className="mr-2 h-4 w-4" />
                             <span>Help</span>
                         </DropdownMenuItem>
                     </Link>
                     <DropdownMenuSeparator />
-                    <DropdownMenuItem>
+                    <DropdownMenuItem className="p-0">
                         <form action={logout} className="w-full">
-                            <button type="submit" className="w-full flex" >
+                            <button type="submit" className="w-full h-full px-2 py-1.5 flex items-center cursor-pointer text-destructive focus:text-destructive" >
                                 <LogOut className="mr-2 h-4 w-4" />
-                                <span > Log out</span>
+                                <span>Log out</span>
                             </button>
                         </form>
                     </DropdownMenuItem>
