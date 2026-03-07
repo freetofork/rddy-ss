@@ -9,10 +9,10 @@ export default function Login() {
     return (
         <div className="flex items-center justify-center bg-muted min-h-screen">
             <Card className="w-[350px] mx-auto">
-                <CardHeader className="space-y-1">
+                <CardHeader className="space-y-1 text-center">
                     <div className="flex justify-center py-4">
                         <Link href='/'>
-                            <Image src="/logo.png" alt="logo" width={50} height={50} />
+                            <Image src="/ruddy-icon.png" alt="Ruddy logo" width={50} height={50} className="rounded-xl shadow-sm" />
                         </Link>
                     </div>
 
