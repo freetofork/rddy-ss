@@ -217,7 +217,7 @@ export default async function LandingPage() {
             <div className="container px-4 md:px-6">
               <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl text-center mb-4">Pricing Plans</h2>
               <p className="text-muted-foreground text-center mb-8 md:text-xl">Early &quot;Duck&quot; Access. Join our limited first wave of divers with locked-in legacy rates.</p>
-              <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+              <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 max-w-5xl mx-auto">
                 {products.map((product) => (
                   <Card key={product.id} className="flex flex-col h-full">
                     <CardHeader>
