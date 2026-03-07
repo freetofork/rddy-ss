@@ -9,6 +9,9 @@ const jetbrainsMono = JetBrains_Mono({ subsets: ["latin"], variable: "--font-mon
 export const metadata: Metadata = {
   title: "Ruddy",
   description: "Query local and cloud data natively with DuckDB.",
+  icons: {
+    icon: "/ruddy-icon.png",
+  },
 };
 
 export default function RootLayout({
