@@ -109,9 +109,26 @@ export async function POST(req: Request) {
                 break;
             }
             case 'customer.subscription.created': {
-                const sub = event.data.object;
+                const sub = event.data.object as Stripe.Subscription;
                 console.log(`[Stripe Webhook] Subscription created for customer: ${sub.customer}`);
-                await db.update(usersTable).set({ plan: sub.id }).where(eq(usersTable.stripe_id, sub.customer));
+
+                // 1. Update local DB with subscription ID
+                await db.update(usersTable).set({ plan: sub.id }).where(eq(usersTable.stripe_id, sub.customer as string));
+
+                // 2. Auto-cancel long-term plans (quarterly, semi-annual, yearly) at period end
+                const price = sub.items.data[0].price;
+                const interval = price.recurring?.interval;
+                const intervalCount = price.recurring?.interval_count || 1;
+
+                // isLongTerm: billed in 'year' OR billed in 'month' but > 1 (3 for quarterly, 6 for semi-annual)
+                const isLongTerm = interval === 'year' || (interval === 'month' && intervalCount > 1);
+
+                if (isLongTerm) {
+                    console.log(`[Stripe Webhook] Enforcing auto-cancel for long-term plan: ${sub.id} (${intervalCount} ${interval})`);
+                    await stripe.subscriptions.update(sub.id, {
+                        cancel_at_period_end: true
+                    });
+                }
                 break;
             }
             default:
