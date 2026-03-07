@@ -26,7 +26,7 @@ export async function POST(req: Request) {
 
         switch (event.type) {
             case 'checkout.session.completed': {
-                const session = event.data.object;
+                const session = event.data.object as Stripe.Checkout.Session;
                 const email = session.customer_details?.email;
                 console.log(`[Stripe Webhook] Checkout completed for email: ${email}`);
 
@@ -41,7 +41,12 @@ export async function POST(req: Request) {
                         expand: ['line_items.data.price.product']
                     });
 
-                    const lineItem = expandedSession.line_items?.data[0];
+                    const lineItem = expandedSession.line_items?.data?.[0];
+                    if (!lineItem) {
+                        console.error("[Stripe Webhook] ERROR: No line items found in session");
+                        break;
+                    }
+
                     const product = lineItem?.price?.product as Stripe.Product | undefined;
                     const planName = product?.name || lineItem?.description || 'Standard';
 
@@ -58,11 +63,11 @@ export async function POST(req: Request) {
 
                     console.log(`[Stripe Webhook] SUCCESS: License key ${licenseKey} saved to DB for ${email}`);
 
-                    // --- NEW: SEND EMAIL VIA RESEND ---
+                    // --- SEND EMAIL VIA RESEND ---
                     try {
                         const resendApiKey = process.env.RESEND_API_KEY;
                         if (!resendApiKey) {
-                            console.error("[Stripe Webhook] ERROR: RESEND_API_KEY is missing from environment variables!");
+                            console.error("[Stripe Webhook] ERROR: RESEND_API_KEY is missing!");
                         } else {
                             console.log(`[Stripe Webhook] Sending license email to ${email}...`);
                             const emailRes = await fetch('https://api.resend.com/emails', {
@@ -72,7 +77,7 @@ export async function POST(req: Request) {
                                     'Authorization': `Bearer ${resendApiKey}`
                                 },
                                 body: JSON.stringify({
-                                    from: 'Ruddy <onboarding@resend.dev>', // You can update this once you verify a domain
+                                    from: 'Ruddy <onboarding@resend.dev>',
                                     to: email,
                                     subject: 'Your Ruddy License Key',
                                     html: `
@@ -90,44 +95,66 @@ export async function POST(req: Request) {
                                 })
                             });
 
-                            const emailData = await emailRes.json();
                             if (emailRes.ok) {
-                                console.log(`[Stripe Webhook] SUCCESS: Email sent! ID: ${emailData.id}`);
+                                console.log(`[Stripe Webhook] SUCCESS: Email sent to ${email}`);
                             } else {
+                                const emailData = await emailRes.json();
                                 console.error("[Stripe Webhook] EMAIL FAILURE:", emailData);
                             }
                         }
                     } catch (emailErr) {
-                        console.error("[Stripe Webhook] EMAIL ERROR:", emailErr);
-                        // We don't throw here because the license is already saved in DB
+                        console.error("[Stripe Webhook] EMAIL EXCEPTION:", emailErr);
                     }
 
                 } catch (dbErr) {
-                    console.error("[Stripe Webhook] DATABASE ERROR:", dbErr);
-                    throw dbErr; // Rethrow to trigger the 400 response
+                    console.error("[Stripe Webhook] CHECKOUT DB ERROR:", dbErr);
+                    throw dbErr;
                 }
                 break;
             }
-            case 'customer.subscription.created': {
+            case 'customer.subscription.created':
+            case 'customer.subscription.updated': {
                 const sub = event.data.object as Stripe.Subscription;
-                console.log(`[Stripe Webhook] Subscription created for customer: ${sub.customer}`);
+                console.log(`[Stripe Webhook] Subscription ${event.type} for customer: ${sub.customer}`);
+
+                if (!sub.customer) {
+                    console.error("[Stripe Webhook] ERROR: No customer ID in subscription event");
+                    break;
+                }
 
                 // 1. Update local DB with subscription ID
-                await db.update(usersTable).set({ plan: sub.id }).where(eq(usersTable.stripe_id, sub.customer as string));
+                try {
+                    const result = await db.update(usersTable)
+                        .set({ plan: sub.id })
+                        .where(eq(usersTable.stripe_id, sub.customer as string));
+                    console.log(`[Stripe Webhook] DB Update Result for ${sub.customer}:`, result);
+                } catch (dbErr) {
+                    console.error("[Stripe Webhook] SUBSCRIPTION DB ERROR:", dbErr);
+                }
 
                 // 2. Auto-cancel long-term plans (quarterly, semi-annual, yearly) at period end
-                const price = sub.items.data[0].price;
+                const price = sub.items?.data?.[0]?.price;
+                if (!price) {
+                    console.warn(`[Stripe Webhook] No price info found for subscription ${sub.id}`);
+                    break;
+                }
+
                 const interval = price.recurring?.interval;
                 const intervalCount = price.recurring?.interval_count || 1;
 
                 // isLongTerm: billed in 'year' OR billed in 'month' but > 1 (3 for quarterly, 6 for semi-annual)
                 const isLongTerm = interval === 'year' || (interval === 'month' && intervalCount > 1);
 
-                if (isLongTerm) {
-                    console.log(`[Stripe Webhook] Enforcing auto-cancel for long-term plan: ${sub.id} (${intervalCount} ${interval})`);
-                    await stripe.subscriptions.update(sub.id, {
-                        cancel_at_period_end: true
-                    });
+                if (isLongTerm && !sub.cancel_at_period_end) {
+                    console.log(`[Stripe Webhook] Enforcing auto-cancel for ${sub.id} (${intervalCount} ${interval})`);
+                    try {
+                        await stripe.subscriptions.update(sub.id, {
+                            cancel_at_period_end: true
+                        });
+                        console.log(`[Stripe Webhook] SUCCESS: Auto-cancel enabled for ${sub.id}`);
+                    } catch (stripeErr) {
+                        console.error(`[Stripe Webhook] STRIPE UPDATE ERROR for ${sub.id}:`, stripeErr);
+                    }
                 }
                 break;
             }
