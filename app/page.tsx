@@ -55,7 +55,7 @@ async function getStripeProducts(): Promise<StripeProduct[]> {
     description: product.description,
     features: product.metadata?.features ? JSON.parse(product.metadata.features) : [],
     price: product.default_price as Stripe.Price
-  }));
+  })).sort((a, b) => (a.price.unit_amount || 0) - (b.price.unit_amount || 0));
 }
 
 export default async function LandingPage() {
