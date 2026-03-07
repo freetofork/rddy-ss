@@ -217,39 +217,39 @@ export default async function LandingPage() {
             <div className="container px-4 md:px-6">
               <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl text-center mb-4">Pricing Plans</h2>
               <p className="text-muted-foreground text-center mb-8 md:text-xl">Early &quot;Duck&quot; Access. Join our limited first wave of divers with locked-in legacy rates.</p>
-              <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 max-w-5xl mx-auto">
+              <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 max-w-4xl mx-auto">
                 {products.map((product) => (
                   <Card key={product.id} className="flex flex-col h-full">
-                    <CardHeader>
-                      <CardTitle className="text-2xl md:text-3xl font-display">{product.name}</CardTitle>
-                      <CardDescription className="text-base mt-2">{product.description}</CardDescription>
+                    <CardHeader className="p-6 pb-2">
+                      <CardTitle className="text-xl md:text-2xl font-display">{product.name}</CardTitle>
+                      <CardDescription className="text-sm mt-1">{product.description}</CardDescription>
                     </CardHeader>
-                    <CardContent className="flex-1 flex flex-col">
-                      <div className="mb-8">
-                        <p className="text-4xl md:text-5xl font-bold font-display tracking-tight">
+                    <CardContent className="flex-1 flex flex-col p-6 pt-0">
+                      <div className="mb-6">
+                        <p className="text-3xl md:text-4xl font-bold font-display tracking-tight">
                           {product.price.unit_amount
                             ? `$${(product.price.unit_amount / 100).toFixed(0)}`
                             : 'Custom'}
-                          <span className="text-xl md:text-2xl font-normal text-muted-foreground tracking-normal block mt-1">
+                          <span className="text-lg md:text-xl font-normal text-muted-foreground tracking-normal block mt-1">
                             {product.price.recurring?.interval ? `per ${product.price.recurring.interval}` : ''}
                           </span>
                         </p>
                       </div>
-                      <ul className="space-y-4 flex-1">
+                      <ul className="space-y-3 flex-1">
                         {product.features?.map((feature, index) => (
                           <li key={index} className="flex items-start">
-                            <Check className="mr-3 h-5 w-5 text-primary shrink-0 transition-opacity opacity-80" />
-                            <span className="text-foreground/80 leading-snug">{feature}</span>
+                            <Check className="mr-2 h-4 w-4 text-primary shrink-0 transition-opacity opacity-80" />
+                            <span className="text-foreground/80 leading-snug text-sm">{feature}</span>
                           </li>
                         ))}
                       </ul>
                     </CardContent>
-                    <CardFooter className="pt-6 mt-auto">
+                    <CardFooter className="p-6 pt-4 mt-auto">
                       <Link
                         className="w-full"
                         href={`/signup?plan=${product.id}`}
                       >
-                        <Button className="w-full text-base h-12">Get Started</Button>
+                        <Button className="w-full text-sm h-10">Get Started</Button>
                       </Link>
                     </CardFooter>
                   </Card>
