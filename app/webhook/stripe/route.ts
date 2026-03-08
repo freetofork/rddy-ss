@@ -38,10 +38,14 @@ export async function POST(req: Request) {
                 if (!email && customerId) {
                     console.log(`[Stripe Webhook] Fetching customer ${customerId} for email fallback...`);
                     const customer = await stripe.customers.retrieve(customerId);
-                    if (!customer.deleted && 'email' in customer) {
-                        email = customer.email;
+                    if (!customer.deleted && 'email' in customer && customer.email) {
+                        email = customer.email.toLowerCase();
                         console.log(`[Stripe Webhook] Found email from customer object: ${email}`);
                     }
+                }
+
+                if (email) {
+                    email = email.toLowerCase().trim();
                 }
 
                 if (!email) {
