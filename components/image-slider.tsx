@@ -8,6 +8,8 @@ const slides = [
     { src: "/screenshot-profiler.png", alt: "Query Plan & Profiler", label: "Query Profiler" },
     { src: "/screenshot-loclo-catalog.png", alt: "Local Hub & Table View", label: "Local Hub" },
     { src: "/screenshot-notebook-editor.png", alt: "Notebook Editor with marimo", label: "Notebook Editor" },
+    { src: "/screenshot-erd.png", alt: "Entity-Relationship Diagrams", label: "Interactive ERD" },
+    { src: "/screenshot-erd-builder.png", alt: "Visual Query Builder via ERD", label: "Visual Query Builder" },
     { src: "/screenshot-connections.png", alt: "Database Connections", label: "Connections" },
 ]
 
