@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button"
 import Image from "next/image"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from "@/components/ui/card"
 import Link from "next/link"
-import { Star, Check, Coins, UserCheck, Database, Activity, Map, CloudDownload, BarChart4, Network } from "lucide-react"
+import { Star, Check, Coins, UserCheck, Database, Activity, Map, CloudDownload, BarChart4, Network, Sparkles } from "lucide-react"
 import { ImageSlider } from "@/components/image-slider"
 import { ScrollReveal } from "@/components/scroll-reveal"
 import Stripe from 'stripe'
@@ -122,7 +122,7 @@ export default async function LandingPage() {
           <section className="w-full py-10 md:py-20 lg:py-32 bg-muted" id="features">
             <div className="container px-4 md:px-6">
               <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl text-center mb-4">Our Features</h2>
-              <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
+              <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
                 <div className="flex flex-col items-center space-y-2 border-muted-foreground/10 p-4 rounded-lg">
                   <div className="p-2 bg-primary/10 rounded-full">
                     <Coins className="h-6 w-6 text-primary" />
@@ -151,6 +151,20 @@ export default async function LandingPage() {
                   <h3 className="text-xl font-bold">Data</h3>
                   <p className="text-muted-foreground text-center">Work with local files or cloud data sources seamlessly.</p>
                 </div>
+                <div className="flex flex-col items-center space-y-2 border-muted-foreground/10 p-4 rounded-lg">
+                  <div className="p-2 bg-primary/10 rounded-full">
+                    <Network className="h-6 w-6 text-primary" />
+                  </div>
+                  <h3 className="text-xl font-bold">ERD Builder</h3>
+                  <p className="text-muted-foreground text-center">Explore database schemas via an interactive map and build visually generated queries.</p>
+                </div>
+                <div className="flex flex-col items-center space-y-2 border-muted-foreground/10 p-4 rounded-lg">
+                  <div className="p-2 bg-primary/10 rounded-full">
+                    <Sparkles className="h-6 w-6 text-primary" />
+                  </div>
+                  <h3 className="text-xl font-bold">Smart Linter</h3>
+                  <p className="text-muted-foreground text-center">Built-in SQL Linter catches syntax errors and standardizes your code on the fly.</p>
+                </div>
               </div>
             </div>
           </section>
@@ -159,7 +173,7 @@ export default async function LandingPage() {
           <section className="w-full py-10 md:py-20 lg:py-32" id="testimonials">
             <div className="container px-4 md:px-6">
               <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl text-center mb-4">Upcoming</h2>
-              <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4 mt-8">
+              <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 mt-8">
                 <Card>
                   <CardContent className="p-6">
                     <div className="flex items-center justify-between mb-4">
@@ -196,18 +210,6 @@ export default async function LandingPage() {
                     <p className="text-sm text-muted-foreground">Graphical outputs directly in the SQL Console.</p>
                   </CardContent>
                 </Card>
-                <Card>
-                  <CardContent className="p-6">
-                    <div className="flex items-center justify-between mb-4">
-                      <div className="p-2 bg-primary/10 rounded-lg">
-                        <Network className="w-6 h-6 text-primary" />
-                      </div>
-                      <span className="text-xl font-black text-primary/20">#4</span>
-                    </div>
-                    <h3 className="font-bold text-lg mb-2">Interactive ERD</h3>
-                    <p className="text-sm text-muted-foreground">Visual interactive ERD to browse complex schemas.</p>
-                  </CardContent>
-                </Card>
               </div>
             </div>
           </section>
@@ -231,7 +233,14 @@ export default async function LandingPage() {
                             ? `$${(product.price.unit_amount / 100).toFixed(0)}`
                             : 'Custom'}
                           <span className="text-lg md:text-xl font-normal text-muted-foreground tracking-normal block mt-1">
-                            {product.price.recurring?.interval ? `per ${product.price.recurring.interval}` : ''}
+                            {(() => {
+                              if (!product.price.recurring) return '';
+                              const { interval, interval_count = 1 } = product.price.recurring;
+                              if (interval === 'month' && interval_count === 3) return 'For 3 Months';
+                              if (interval === 'month' && interval_count === 6) return 'For 6 Months';
+                              if (interval === 'year' || (interval === 'month' && interval_count === 12)) return 'For 1 Year';
+                              return `per ${interval}`;
+                            })()}
                           </span>
                         </p>
                       </div>
