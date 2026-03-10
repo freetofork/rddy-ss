@@ -57,6 +57,9 @@ export default async function Dashboard() {
                                     Manage in Stripe <ExternalLink className="h-3 w-3" />
                                 </a>
                             </Button>
+                            <p className="text-[10px] text-muted-foreground/60 text-center mt-2 leading-snug">
+                                Please if you also want to delete your account, click on the Profile icon on the top right corner or in the Ruddy app.
+                            </p>
                         </CardContent>
                     </Card>
 
@@ -72,7 +75,7 @@ export default async function Dashboard() {
                             </p>
                             <Button asChild className="w-full bg-[#FF0000] hover:bg-[#CC0000] text-white">
                                 <a
-                                    href="https://www.youtube.com/@ruddyapp"
+                                    href="http://www.youtube.com/@ruddyide"
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     className="flex items-center justify-center gap-2"
