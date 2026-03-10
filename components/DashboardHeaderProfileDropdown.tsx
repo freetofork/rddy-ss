@@ -6,7 +6,7 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { Bell, ReceiptText, User, Settings, HelpCircle, LogOut } from "lucide-react"
+import { Bell, ReceiptText, User, Settings, HelpCircle, LogOut, UserMinus } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import { } from "@supabase/supabase-js"
@@ -41,6 +41,12 @@ export default async function DashboardHeaderProfileDropdown() {
                         </div>
                     </DropdownMenuLabel>
                     <DropdownMenuSeparator />
+                    <Link href="#">
+                        <DropdownMenuItem className="cursor-pointer text-destructive focus:bg-destructive/10 focus:text-destructive">
+                            <UserMinus className="mr-2 h-4 w-4" />
+                            <span>Delete Account</span>
+                        </DropdownMenuItem>
+                    </Link>
                     <Link href="#">
                         <DropdownMenuItem className="cursor-pointer">
                             <HelpCircle className="mr-2 h-4 w-4" />
