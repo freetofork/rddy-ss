@@ -38,7 +38,7 @@ export default function TermsOfService() {
                 The Software runs queries and executes logic directly on your local hardware <strong>unless</strong> you explicitly configure an external cloud provider (e.g., MotherDuck, generic HTTP inputs).
               </li>
               <li>
-                <strong>No native bugs</strong> can create permanent destructive effects <strong>without</strong> your explicit consent and action. Only you can save or permanently modify your local data.
+                <strong>No native functionality or unintended bugs</strong> can create permanent destructive effects <strong>without</strong> your explicit consent and action. Only you can save or permanently modify your local data.
               </li>
             </ul>
           </section>
@@ -144,7 +144,7 @@ export default function TermsOfService() {
             <h3 className="text-xl font-bold mb-4">Telemetry Schema (JSON example)</h3>
             <div className="bg-[#4F2C1E] text-[#FFF5E6] p-4 rounded-xl overflow-x-auto shadow-inner rounded-br-2xl border border-[#4F2C1E]/20">
               <pre className="font-mono text-xs leading-relaxed">
-{`{
+                {`{
   "timestamp": "2026-10-15T14:32:10Z",
   "os_version": "macOS 14.5",
   "app_build": "2.7.0",
