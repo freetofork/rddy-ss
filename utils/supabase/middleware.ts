@@ -35,8 +35,13 @@ export async function updateSession(request: NextRequest) {
     } = await supabase.auth.getUser()
     const url = request.nextUrl.clone()
 
-    if (request.nextUrl.pathname.startsWith('/webhook')) {
-        return supabaseResponse
+    // Aggressively ignore all webhook paths to prevent redirects (like 307)
+    if (request.nextUrl.pathname.includes('/webhook')) {
+        return NextResponse.next({
+            request: {
+                headers: request.headers,
+            },
+        })
     }
 
     if (
@@ -45,6 +50,7 @@ export async function updateSession(request: NextRequest) {
         !request.nextUrl.pathname.startsWith('/auth') &&
         !request.nextUrl.pathname.startsWith('/signup') &&
         !request.nextUrl.pathname.startsWith('/forgot-password') &&
+        !request.nextUrl.pathname.startsWith('/terms') &&
         !(request.nextUrl.pathname === '/')
     ) {
         // no user, potentially respond by redirecting the user to the login page
