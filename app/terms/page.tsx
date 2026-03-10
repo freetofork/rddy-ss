@@ -175,7 +175,7 @@ export default function TermsOfService() {
           <section>
             <h2 className="text-2xl font-bold mb-4">8. Disclaimer of Warranties</h2>
             <p className="mb-4">
-              The Software is provided strictly "AS IS" without warranty of any kind, explicit or implied. We do not guarantee that the software will be error-free, function uninterrupted, or remain compatible with all future macOS releases. In no event shall we be held liable for any damages arising from the use of the Software, including but not limited to loss of data, loss of business revenue, or workflow interruptions.
+              The Software is provided strictly &quot;AS IS&quot; without warranty of any kind, explicit or implied. We do not guarantee that the software will be error-free, function uninterrupted, or remain compatible with all future macOS releases. In no event shall we be held liable for any damages arising from the use of the Software, including but not limited to loss of data, loss of business revenue, or workflow interruptions.
             </p>
           </section>
 
