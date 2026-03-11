@@ -93,7 +93,7 @@ export async function POST(req: Request) {
                                     'Authorization': `Bearer ${resendApiKey}`
                                 },
                                 body: JSON.stringify({
-                                    from: 'Ruddy <onboarding@resend.dev>',
+                                    from: 'Ruddy <hello@ruddy.pro>',
                                     to: email,
                                     subject: 'Your Ruddy License Key',
                                     html: `
