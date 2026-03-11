@@ -2,8 +2,9 @@ import { Button } from "@/components/ui/button"
 import Image from "next/image"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from "@/components/ui/card"
 import Link from "next/link"
-import { Star, Check, Coins, UserCheck, Database, Activity, Map, CloudDownload, BarChart4, Network, Sparkles } from "lucide-react"
+import { Star, Check, Coins, UserCheck, Database, Activity, Map, CloudDownload, BarChart4, Network, Sparkles, SlidersHorizontal } from "lucide-react"
 import { ImageSlider } from "@/components/image-slider"
+import { DownloadModal } from "@/components/DownloadModal"
 import { ScrollReveal } from "@/components/scroll-reveal"
 import Stripe from 'stripe'
 
@@ -95,7 +96,7 @@ export default async function LandingPage() {
                 </p>
               </div>
               <div className="flex items-center gap-3 mt-4">
-                <Button>Download for macOS</Button>
+                <DownloadModal />
               </div>
             </div>
             <div className="w-full md:w-2/3">
@@ -173,7 +174,7 @@ export default async function LandingPage() {
           <section className="w-full py-10 md:py-20 lg:py-32" id="testimonials">
             <div className="container px-4 md:px-6">
               <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl text-center mb-4">Upcoming</h2>
-              <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 mt-8">
+              <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4 mt-8">
                 <Card>
                   <CardContent className="p-6">
                     <div className="flex items-center justify-between mb-4">
@@ -207,7 +208,19 @@ export default async function LandingPage() {
                       <span className="text-xl font-black text-primary/20">#3</span>
                     </div>
                     <h3 className="font-bold text-lg mb-2">Native Charts</h3>
-                    <p className="text-sm text-muted-foreground">Graphical outputs directly in the SQL Console.</p>
+                    <p className="text-sm text-muted-foreground">Graphical outputs directly in the SQL Console. Multiple colors to customize.</p>
+                  </CardContent>
+                </Card>
+                <Card>
+                  <CardContent className="p-6">
+                    <div className="flex items-center justify-between mb-4">
+                      <div className="p-2 bg-primary/10 rounded-lg">
+                        <SlidersHorizontal className="w-6 h-6 text-primary" />
+                      </div>
+                      <span className="text-xl font-black text-primary/20">#4</span>
+                    </div>
+                    <h3 className="font-bold text-lg mb-2">Control</h3>
+                    <p className="text-sm text-muted-foreground">More control over DuckDB default settings.</p>
                   </CardContent>
                 </Card>
               </div>
