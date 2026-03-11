@@ -47,7 +47,7 @@ export function DownloadModal() {
                 </div>
                 
                 <p className="text-sm text-amber-900/80 leading-relaxed font-medium">
-                  Because Ruddy is a brand new application, macOS Gatekeeper might show an "unverified developer" warning on your first launch.
+                  Because Ruddy is a brand new application, macOS Gatekeeper might show an &quot;unverified developer&quot; warning on your first launch.
                 </p>
                 
                 <div className="bg-amber-200/40 p-3 rounded-xl border border-amber-200/60 mt-2">
@@ -57,8 +57,8 @@ export function DownloadModal() {
                   <ol className="list-decimal pl-5 text-sm text-amber-900/80 mt-2 font-medium space-y-1">
                     <li>Go to your <span className="font-bold">Applications</span> folder</li>
                     <li><span className="font-bold">Right-Click</span> (or Control-Click) the Ruddy app</li>
-                    <li>Select <span className="font-bold">"Open"</span> from the menu</li>
-                    <li>Click <span className="font-bold">"Open anyway"</span> on the prompt</li>
+                    <li>Select <span className="font-bold">&quot;Open&quot;</span> from the menu</li>
+                    <li>Click <span className="font-bold">&quot;Open anyway&quot;</span> on the prompt</li>
                   </ol>
                 </div>
                 <p className="text-xs text-amber-900/60 italic font-medium mt-2">
