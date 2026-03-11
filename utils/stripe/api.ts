@@ -8,11 +8,18 @@ export const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!)
 const PUBLIC_URL = process.env.NEXT_PUBLIC_WEBSITE_URL || "https://www.ruddy.pro";
 
 export async function getStripePlan(email: string) {
-    const user = await db.select().from(usersTable).where(eq(usersTable.email, email))
-    const subscription = await stripe.subscriptions.retrieve(user[0].plan);
-    const productId = subscription.items.data[0].plan.product as string
-    const product = await stripe.products.retrieve(productId)
-    return product.name
+    try {
+        const user = await db.select().from(usersTable).where(eq(usersTable.email, email))
+        if (!user || user.length === 0 || !user[0].plan) return "Free Plan";
+        
+        const subscription = await stripe.subscriptions.retrieve(user[0].plan);
+        const productId = subscription.items.data[0].plan.product as string
+        const product = await stripe.products.retrieve(productId)
+        return product.name
+    } catch (e: any) {
+        console.error(`[getStripePlan] Error retrieving plan for ${email}:`, e.message);
+        return "No Active Plan";
+    }
 }
 
 export async function createStripeCustomer(id: string, email: string, name?: string) {
