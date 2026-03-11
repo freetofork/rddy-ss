@@ -9,7 +9,7 @@ export function DownloadModal() {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleDownload = () => {
-    window.location.href = "https://pub-66f67f4a3e74412c91eeedaff15ae551.r2.dev/Ruddy_1.0.0-rc.1_aarch64.dmg";
+    window.location.href = "https://pub-66f67f4a3e74412c91eeedaff15ae554.r2.dev/Ruddy_1.0.0-rc.1_aarch64.dmg";
     // Close modal after a short delay
     setTimeout(() => setIsOpen(false), 2000);
   };
