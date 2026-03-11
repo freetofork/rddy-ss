@@ -243,7 +243,7 @@ export default async function LandingPage() {
                       <div className="mb-6">
                         <p className="text-3xl md:text-4xl font-bold font-display tracking-tight">
                           {product.price.unit_amount
-                            ? `$${(product.price.unit_amount / 100).toFixed(0)}`
+                            ? `$${(product.price.unit_amount / 100).toFixed(2)}`
                             : 'Custom'}
                           <span className="text-lg md:text-xl font-normal text-muted-foreground tracking-normal block mt-1">
                             {(() => {
