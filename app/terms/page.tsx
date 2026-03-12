@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
+import { Linkedin, MessageCircle } from 'lucide-react';
 
 export const metadata = {
   title: 'Terms of Service | Ruddy',
@@ -187,10 +188,36 @@ export default function TermsOfService() {
           </section>
         </div>
 
-        <div className="mt-16 py-8 border-t border-[#F0E6D3] text-center">
+        <div className="mt-16 py-8 border-t border-[#F0E6D3] text-center flex flex-col items-center gap-6">
           <Link href="/" className="inline-flex items-center text-sm font-medium text-[#1A96E8] hover:underline">
             &larr; Back to the Ruddy Desktop Application
           </Link>
+          
+          <div className="flex items-center justify-center gap-6">
+            <a 
+              href="https://www.linkedin.com/showcase/ruddy-ide" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="group flex flex-col items-center gap-2 text-[#4F2C1E]/60 hover:text-[#0A66C2] transition-colors"
+            >
+              <div className="p-3 bg-muted rounded-full group-hover:bg-[#0A66C2]/10 transition-colors">
+                <Linkedin className="w-5 h-5" />
+              </div>
+              <span className="text-xs font-semibold">LinkedIn</span>
+            </a>
+            
+            <a 
+              href="https://discord.gg/azsyQdNPEn" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="group flex flex-col items-center gap-2 text-[#4F2C1E]/60 hover:text-[#5865F2] transition-colors"
+            >
+              <div className="p-3 bg-muted rounded-full group-hover:bg-[#5865F2]/10 transition-colors">
+                <MessageCircle className="w-5 h-5" />
+              </div>
+              <span className="text-xs font-semibold">Discord</span>
+            </a>
+          </div>
         </div>
       </main>
     </div>
