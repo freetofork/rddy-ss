@@ -11,6 +11,7 @@ const slides = [
     { src: "/screenshot-loclo-catalog.png", alt: "Local Hub & Table View", label: "Local Hub" },
     { src: "/screenshot-erd.png", alt: "Entity-Relationship Diagrams", label: "Interactive ERD" },
     { src: "/screenshot-erd-builder.png", alt: "Visual Query Builder via ERD", label: "Visual Query Builder" },
+    { src: "/screenshot-spatial.png", alt: "Geospatial Data Map", label: "Spatial Map" },
 ]
 
 export function ImageSlider() {
