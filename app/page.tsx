@@ -142,8 +142,8 @@ export default async function LandingPage() {
                   <div className="p-2 bg-primary/10 rounded-full">
                     <Activity className="h-6 w-6 text-primary" />
                   </div>
-                  <h3 className="text-xl font-bold">Catalog</h3>
-                  <p className="text-muted-foreground text-center">Rich and clean information about your schemas</p>
+                  <h3 className="text-xl font-bold">Catalog & ERD</h3>
+                  <p className="text-muted-foreground text-center">Rich and clean information about your schemas. Visual data model and query builder.</p>
                 </div>
                 <div className="flex flex-col items-center space-y-2 border-muted-foreground/10 p-4 rounded-lg">
                   <div className="p-2 bg-primary/10 rounded-full">
@@ -154,10 +154,10 @@ export default async function LandingPage() {
                 </div>
                 <div className="flex flex-col items-center space-y-2 border-muted-foreground/10 p-4 rounded-lg">
                   <div className="p-2 bg-primary/10 rounded-full">
-                    <Network className="h-6 w-6 text-primary" />
+                    <Map className="h-6 w-6 text-primary" />
                   </div>
-                  <h3 className="text-xl font-bold">ERD Builder</h3>
-                  <p className="text-muted-foreground text-center">Explore database schemas via an interactive map and build visually generated queries.</p>
+                  <h3 className="text-xl font-bold">Spatial</h3>
+                  <p className="text-muted-foreground text-center">Full advanced geospatial features and beautiful visualizations and maps.</p>
                 </div>
                 <div className="flex flex-col items-center space-y-2 border-muted-foreground/10 p-4 rounded-lg">
                   <div className="p-2 bg-primary/10 rounded-full">
