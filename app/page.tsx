@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button"
 import Image from "next/image"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from "@/components/ui/card"
 import Link from "next/link"
-import { Star, Check, Coins, UserCheck, Database, Activity, Map, CloudDownload, BarChart4, Network, Sparkles, SlidersHorizontal } from "lucide-react"
+import { Star, Check, Coins, UserCheck, Database, Activity, Map, CloudDownload, BarChart4, Network, Sparkles, SlidersHorizontal, Bot } from "lucide-react"
 import { ImageSlider } from "@/components/image-slider"
 import { DownloadModal } from "@/components/DownloadModal"
 import { ScrollReveal } from "@/components/scroll-reveal"
@@ -174,29 +174,17 @@ export default async function LandingPage() {
           <section className="w-full py-10 md:py-20 lg:py-32" id="testimonials">
             <div className="container px-4 md:px-6">
               <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl text-center mb-4">Upcoming</h2>
-              <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4 mt-8">
+              <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 mt-8">
                 <Card>
                   <CardContent className="p-6">
                     <div className="flex items-center justify-between mb-4">
                       <div className="p-2 bg-primary/10 rounded-lg">
-                        <CloudDownload className="w-6 h-6 text-primary" />
+                        <Bot className="w-6 h-6 text-primary" />
                       </div>
                       <span className="text-xl font-black text-primary/20">#1</span>
                     </div>
-                    <h3 className="font-bold text-lg mb-2">Cloud Expansion</h3>
-                    <p className="text-sm text-muted-foreground">More cloud and remote data sources (Buckets, HTTPS etc)</p>
-                  </CardContent>
-                </Card>
-                <Card>
-                  <CardContent className="p-6">
-                    <div className="flex items-center justify-between mb-4">
-                      <div className="p-2 bg-primary/10 rounded-lg">
-                        <Map className="w-6 h-6 text-primary" />
-                      </div>
-                      <span className="text-xl font-black text-primary/20">#2</span>
-                    </div>
-                    <h3 className="font-bold text-lg mb-2">Spatial Analytics</h3>
-                    <p className="text-sm text-muted-foreground">Local GIS and Map interface for spatial data visualization.</p>
+                    <h3 className="font-bold text-lg mb-2">Ruddy Agent</h3>
+                    <p className="text-sm text-muted-foreground">A full AI agent powering your experience. Executing queries and more.</p>
                   </CardContent>
                 </Card>
                 <Card>
@@ -205,7 +193,7 @@ export default async function LandingPage() {
                       <div className="p-2 bg-primary/10 rounded-lg">
                         <BarChart4 className="w-6 h-6 text-primary" />
                       </div>
-                      <span className="text-xl font-black text-primary/20">#3</span>
+                      <span className="text-xl font-black text-primary/20">#2</span>
                     </div>
                     <h3 className="font-bold text-lg mb-2">Native Charts</h3>
                     <p className="text-sm text-muted-foreground">Graphical outputs directly in the SQL Console. Multiple colors to customize.</p>
@@ -215,12 +203,12 @@ export default async function LandingPage() {
                   <CardContent className="p-6">
                     <div className="flex items-center justify-between mb-4">
                       <div className="p-2 bg-primary/10 rounded-lg">
-                        <SlidersHorizontal className="w-6 h-6 text-primary" />
+                        <CloudDownload className="w-6 h-6 text-primary" />
                       </div>
-                      <span className="text-xl font-black text-primary/20">#4</span>
+                      <span className="text-xl font-black text-primary/20">#3</span>
                     </div>
-                    <h3 className="font-bold text-lg mb-2">Control</h3>
-                    <p className="text-sm text-muted-foreground">More control over DuckDB default settings.</p>
+                    <h3 className="font-bold text-lg mb-2">Cloud Expansion</h3>
+                    <p className="text-sm text-muted-foreground">More cloud and remote data sources (Buckets, HTTPS etc)</p>
                   </CardContent>
                 </Card>
               </div>
