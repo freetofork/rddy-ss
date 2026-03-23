@@ -92,7 +92,7 @@ export default async function LandingPage() {
                   </h1>
                 </div>
                 <p className="text-muted-foreground text-sm md:text-base">
-                  Query local and cloud data natively with DuckDB.
+                  Local and cloud data natively with DuckDB and AI 
                 </p>
               </div>
               <div className="flex items-center gap-3 mt-4">
