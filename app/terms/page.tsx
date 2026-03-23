@@ -46,12 +46,11 @@ export default function TermsOfService() {
 
           <section>
             <h2 className="text-2xl font-bold mb-4">3. Pricing and Subscriptions</h2>
-            <p className="mb-4">Ruddy offers four plans:</p>
+            <p className="mb-4">Ruddy offers three plans:</p>
             <ul className="list-disc pl-6 space-y-2 text-[#4F2C1E]/90 mb-6">
-              <li><strong>The Bubbler (Monthly)</strong> – auto‑renews each calendar month.</li>
-              <li><strong>Splash (Quarterly)</strong> – does not auto-renew. Requires manual renewal every 3 months.</li>
-              <li><strong>Lake (Semi‑annual)</strong> – does not auto-renew. Requires manual renewal every 6 months.</li>
-              <li><strong>Diver (Yearly)</strong> – does not auto-renew. Requires manual renewal every 12 months.</li>
+              <li><strong>The Bubbler (Monthly)</strong> – $1.25/mo. Auto‑renews each calendar month. Includes a 7-day free trial.</li>
+              <li><strong>Splash (6 Months)</strong> – $7.50/6 mo. Auto-renews every 6 months. Includes a 7-day free trial.</li>
+              <li><strong>Diver (Pay-Once)</strong> – $15.00 one-time payment for lifetime access. No auto-renewal.</li>
             </ul>
 
             <h3 className="text-xl font-bold mb-2">3.1 Billing</h3>
@@ -64,9 +63,9 @@ export default function TermsOfService() {
               Cancellations are performed through the <strong>Stripe billing portal</strong> and become effective <strong>at the end of the current billing period</strong>. No prorated refunds are issued.
             </p>
 
-            <h3 className="text-xl font-bold mb-2">3.3 Auto‑cancellation</h3>
+            <h3 className="text-xl font-bold mb-2">3.3 Expirations and Non-Recurring Plans</h3>
             <p className="mb-4">
-              Non‑monthly plans are automatically cancelled <strong>after the expiration of their respective billing period</strong>. Users receive a reminder 7 days before cancellation.
+              Subscription trials (The Bubbler, Splash) will automatically upgrade to paid subscriptions after 7 days unless cancelled. The Pay-Once plan (Diver) does not expire and will never automatically charge you again.
             </p>
           </section>
 
