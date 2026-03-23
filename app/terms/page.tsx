@@ -162,7 +162,7 @@ export default function TermsOfService() {
           <section>
             <h2 className="text-2xl font-bold mb-4">7. Artificial Intelligence & Third-Party Integrations</h2>
             <p className="mb-4">
-              Ruddy natively supports AI capabilities through Bring Your Own (BYO) model keys, including but not limited to OpenAI GPT-4O, Google Gemini 2.5, Anthropic Claude 3.5, and OpenRouter for any custom model. Additionally, Ruddy features native Model Context Protocol (MCP) integrations with Claude, Cursor, Windsurf, Antigravity, GitHub, dbt Labs, and Google Toolbox for Databases.
+              Ruddy natively supports AI capabilities through Bring Your Own (BYO) model keys, including but not limited to OpenAI GPT-4O, Google Gemini 2.5, Anthropic Claude 3.5, and OpenRouter for any custom model. Additionally, Ruddy features native Model Context Protocol (MCP) integrations with Claude, Cursor, Windsurf, Antigravity, GitHub, dbt Labs, and Google Toolbox for Databases and MotherDuck.
             </p>
             <p className="mb-4">
               By using these integrations, you acknowledge that they are third-party services. Ruddy bears zero responsibility for the behavior, logic, data processing, output accuracy, or potential damages caused by these external models and MCP services. You are solely responsible for managing your API keys and ensuring your usage complies with the respective third-party terms of service.
