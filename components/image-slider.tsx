@@ -4,6 +4,7 @@ import { useState, useEffect } from "react"
 import { ChevronLeft, ChevronRight } from "lucide-react"
 
 const slides = [
+    { src: "/screenshot-ruddynie-main.png", alt: "Ruddy Agent Main Screen", label: "Ruddy Agent" },
     { src: "/screenshot-catalog.png", alt: "SQL Console & Data Catalog", label: "SQL Console" },
     { src: "/screenshot-profiler.png", alt: "Query Plan & Profiler", label: "Query Profiler" },
     { src: "/screenshot-notebook-editor.png", alt: "Notebook Editor with marimo", label: "Notebook Editor" },
@@ -12,6 +13,9 @@ const slides = [
     { src: "/screenshot-erd.png", alt: "Entity-Relationship Diagrams", label: "Interactive ERD" },
     { src: "/screenshot-erd-builder.png", alt: "Visual Query Builder via ERD", label: "Visual Query Builder" },
     { src: "/screenshot-spatial.png", alt: "Geospatial Data Map", label: "Spatial Map" },
+    { src: "/screenshot-git.png", alt: "Git Version Control", label: "Git Integration" },
+    { src: "/screenshot-code.png", alt: "Native Code Editor", label: "Code Editor" },
+    { src: "/screenshot-mcp.png", alt: "Model Context Protocol", label: "MCP Integrations" },
 ]
 
 export function ImageSlider() {
