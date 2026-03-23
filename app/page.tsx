@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button"
 import Image from "next/image"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from "@/components/ui/card"
 import Link from "next/link"
-import { Star, Check, Coins, UserCheck, Database, Activity, Map, CloudDownload, BarChart4, Network, Sparkles, SlidersHorizontal, Bot } from "lucide-react"
+import { Star, Check, Coins, UserCheck, Database, Activity, Map, CloudDownload, BarChart4, Network, Sparkles, SlidersHorizontal, Bot, CheckCircle2, Clock } from "lucide-react"
 import { ImageSlider } from "@/components/image-slider"
 import { DownloadModal } from "@/components/DownloadModal"
 import { ScrollReveal } from "@/components/scroll-reveal"
@@ -135,8 +135,8 @@ export default async function LandingPage() {
                   <div className="p-2 bg-primary/10 rounded-full">
                     <UserCheck className="h-6 w-6 text-primary" />
                   </div>
-                  <h3 className="text-xl font-bold">Code</h3>
-                  <p className="text-muted-foreground text-center">Execute Python or SQL code in custom notebooks. Install your own native libraries.</p>
+                  <h3 className="text-xl font-bold">Code & Linter</h3>
+                  <p className="text-muted-foreground text-center">Execute Python or SQL code in custom notebooks. Install your own native libraries.<br/>Built-in SQL Linter.</p>
                 </div>
                 <div className="flex flex-col items-center space-y-2 border-muted-foreground/10 p-4 rounded-lg">
                   <div className="p-2 bg-primary/10 rounded-full">
@@ -161,10 +161,10 @@ export default async function LandingPage() {
                 </div>
                 <div className="flex flex-col items-center space-y-2 border-muted-foreground/10 p-4 rounded-lg">
                   <div className="p-2 bg-primary/10 rounded-full">
-                    <Sparkles className="h-6 w-6 text-primary" />
+                    <Bot className="h-6 w-6 text-primary" />
                   </div>
-                  <h3 className="text-xl font-bold">Smart Linter</h3>
-                  <p className="text-muted-foreground text-center">Built-in SQL Linter catches syntax errors and standardizes your code on the fly.</p>
+                  <h3 className="text-xl font-bold">Ruddynie</h3>
+                  <p className="text-muted-foreground text-center">Meet our smart agent. She can execute queries, full analysis on notebooks and connect to MCP&apos;s.</p>
                 </div>
               </div>
             </div>
@@ -176,7 +176,7 @@ export default async function LandingPage() {
               <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl text-center mb-4">Upcoming</h2>
               <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 mt-8">
                 <Card>
-                  <CardContent className="p-6">
+                  <CardContent className="p-6 flex flex-col h-full">
                     <div className="flex items-center justify-between mb-4">
                       <div className="p-2 bg-primary/10 rounded-lg">
                         <Bot className="w-6 h-6 text-primary" />
@@ -184,11 +184,12 @@ export default async function LandingPage() {
                       <span className="text-xl font-black text-primary/20">#1</span>
                     </div>
                     <h3 className="font-bold text-lg mb-2">Ruddy Agent</h3>
-                    <p className="text-sm text-muted-foreground">A full AI agent powering your experience. Executing queries and more.</p>
+                    <p className="text-sm text-muted-foreground mb-4">A full AI agent powering your experience. Executing queries and more.</p>
+                    <div className="flex items-center gap-1.5 text-xs text-emerald-600 bg-emerald-100/50 w-fit px-2.5 py-1 rounded-md font-medium mt-auto"><CheckCircle2 className="w-3.5 h-3.5" /> Implemented</div>
                   </CardContent>
                 </Card>
                 <Card>
-                  <CardContent className="p-6">
+                  <CardContent className="p-6 flex flex-col h-full">
                     <div className="flex items-center justify-between mb-4">
                       <div className="p-2 bg-primary/10 rounded-lg">
                         <BarChart4 className="w-6 h-6 text-primary" />
@@ -196,11 +197,12 @@ export default async function LandingPage() {
                       <span className="text-xl font-black text-primary/20">#2</span>
                     </div>
                     <h3 className="font-bold text-lg mb-2">Native Charts</h3>
-                    <p className="text-sm text-muted-foreground">Graphical outputs directly in the SQL Console. Multiple colors to customize.</p>
+                    <p className="text-sm text-muted-foreground mb-4">Graphical outputs directly in the SQL Console. Multiple colors to customize.</p>
+                    <div className="flex items-center gap-1.5 text-xs text-amber-600 bg-amber-100/50 w-fit px-2.5 py-1 rounded-md font-medium mt-auto"><Clock className="w-3.5 h-3.5" /> Coming soon</div>
                   </CardContent>
                 </Card>
                 <Card>
-                  <CardContent className="p-6">
+                  <CardContent className="p-6 flex flex-col h-full">
                     <div className="flex items-center justify-between mb-4">
                       <div className="p-2 bg-primary/10 rounded-lg">
                         <CloudDownload className="w-6 h-6 text-primary" />
@@ -208,7 +210,8 @@ export default async function LandingPage() {
                       <span className="text-xl font-black text-primary/20">#3</span>
                     </div>
                     <h3 className="font-bold text-lg mb-2">Cloud Expansion</h3>
-                    <p className="text-sm text-muted-foreground">More cloud and remote data sources (Buckets, HTTPS etc)</p>
+                    <p className="text-sm text-muted-foreground mb-4">More cloud and remote data sources (Buckets, HTTPS etc)</p>
+                    <div className="flex items-center gap-1.5 text-xs text-emerald-600 bg-emerald-100/50 w-fit px-2.5 py-1 rounded-md font-medium mt-auto"><CheckCircle2 className="w-3.5 h-3.5" /> Implemented</div>
                   </CardContent>
                 </Card>
               </div>
@@ -220,7 +223,7 @@ export default async function LandingPage() {
             <div className="container px-4 md:px-6">
               <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl text-center mb-4">Pricing Plans</h2>
               <p className="text-muted-foreground text-center mb-8 md:text-xl">Early &quot;Duck&quot; Access. Join our limited first wave of divers with locked-in legacy rates.</p>
-              <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4 max-w-6xl mx-auto">
+              <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 max-w-5xl mx-auto items-stretch place-content-center">
                 {products.map((product) => (
                   <Card key={product.id} className="flex flex-col h-full">
                     <CardHeader className="p-6 pb-2">
