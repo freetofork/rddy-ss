@@ -55,3 +55,36 @@ export async function generateStripeBillingPortalLink(email: string) {
     });
     return portalSession.url
 }
+
+export async function createTrialCheckoutSession(email: string, productId: string) {
+    const user = await db.select().from(usersTable).where(eq(usersTable.email, email))
+    
+    // 1. Get the price for the specific plan
+    const prices = await stripe.prices.list({ product: productId, active: true })
+    if (prices.data.length === 0) throw new Error("No active price found for this product")
+    const price = prices.data[0]
+
+    // 2. Identify if it's a subscription (Bubbler, Splash) or a one-time payment (Diver)
+    const isSubscription = price.type === 'recurring'
+
+    // 3. Configure the checkout session natively
+    const sessionConfig: Stripe.Checkout.SessionCreateParams = {
+        customer: user[0].stripe_id,
+        mode: isSubscription ? 'subscription' : 'payment',
+        line_items: [{ price: price.id, quantity: 1 }],
+        success_url: `${PUBLIC_URL}/dashboard?success=true`,
+        cancel_url: `${PUBLIC_URL}/dashboard?canceled=true`,
+        payment_method_collection: 'if_required',
+    }
+
+    // 4. Force inject the 7-day trial explicitly for subscriptions
+    if (isSubscription) {
+        sessionConfig.subscription_data = {
+            trial_period_days: 7,
+            trial_settings: { end_behavior: { missing_payment_method: 'cancel' } }
+        }
+    }
+
+    const session = await stripe.checkout.sessions.create(sessionConfig)
+    return session.url
+}
