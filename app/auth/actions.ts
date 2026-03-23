@@ -8,7 +8,7 @@ import { usersTable } from '@/utils/db/schema'
 import { eq } from 'drizzle-orm'
 
 
-const PUBLIC_URL = process.env.NEXT_PUBLIC_WEBSITE_URL || "http://localhost:3000"
+const PUBLIC_URL = process.env.NEXT_PUBLIC_WEBSITE_URL || "https://www.ruddy.pro"
 
 export async function resetPassword(currentState: { message: string }, formData: FormData) {
     const supabase = createClient()
@@ -101,8 +101,13 @@ export async function signup(currentState: { message: string }, formData: FormDa
         return { message: "Failed to setup user account" }
     }
 
+    const plan = formData.get('plan') as string;
     revalidatePath("/", "layout")
-    redirect("/subscribe")
+    if (plan) {
+        redirect(`/subscribe?plan=${plan}`)
+    } else {
+        redirect("/subscribe")
+    }
 }
 
 
@@ -132,12 +137,17 @@ export async function logout() {
 }
 
 
-export async function signInWithGoogle() {
+export async function signInWithGoogle(formData?: FormData) {
     const supabase = createClient()
+    const plan = formData?.get('plan') as string;
+    const redirectToUrl = plan 
+        ? `${PUBLIC_URL}/auth/callback?next=/subscribe?plan=${plan}`
+        : `${PUBLIC_URL}/auth/callback`;
+
     const { data, error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
-            redirectTo: `${PUBLIC_URL}/auth/callback`,
+            redirectTo: redirectToUrl,
         },
     })
 
@@ -147,12 +157,17 @@ export async function signInWithGoogle() {
 }
 
 
-export async function signInWithGithub() {
+export async function signInWithGithub(formData?: FormData) {
     const supabase = createClient()
+    const plan = formData?.get('plan') as string;
+    const redirectToUrl = plan 
+        ? `${PUBLIC_URL}/auth/callback?next=/subscribe?plan=${plan}`
+        : `${PUBLIC_URL}/auth/callback`;
+
     const { data, error } = await supabase.auth.signInWithOAuth({
         provider: 'github',
         options: {
-            redirectTo: `${PUBLIC_URL}/auth/callback`,
+            redirectTo: redirectToUrl,
         },
     })
 
