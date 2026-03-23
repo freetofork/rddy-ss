@@ -173,6 +173,35 @@ export async function POST(req: Request) {
                 }
                 break;
             }
+            case 'customer.subscription.deleted': {
+                const sub = event.data.object as Stripe.Subscription;
+                const customerId = sub.customer as string;
+                console.log(`[Stripe Webhook] Sub Deleted: ${sub.id} | Event: ${event.type} | Customer: ${customerId}`);
+
+                if (!customerId) break;
+
+                try {
+                    // 1. Find the local user linked to this Stripe ID
+                    const users = await db.select().from(usersTable).where(eq(usersTable.stripe_id, customerId));
+                    if (users.length > 0) {
+                        const userEmail = users[0].email;
+                        
+                        // 2. Eradicate all license keys given for this email
+                        // This rigidly forces the Native verification RPC to fail, logging them out of the App immediately.
+                        const deleteRes = await db.delete(licenseKeysTable).where(eq(licenseKeysTable.email, userEmail));
+                        console.log(`[Stripe Webhook] Revoked licenses for expired sub! DB Result:`, deleteRes);
+                        
+                        // 3. Reset plan flag
+                        await db.update(usersTable).set({ plan: 'none' }).where(eq(usersTable.stripe_id, customerId));
+                        console.log(`[Stripe Webhook] SUCCESS: Reset User ${userEmail} plan to 'none'`);
+                    } else {
+                        console.warn(`[Stripe Webhook] Warning: Could not find DB user for Stripe Customer: ${customerId}`);
+                    }
+                } catch (dbErr) {
+                    console.error("[Stripe Webhook] REVOCATION DB ERROR:", dbErr);
+                }
+                break;
+            }
             default:
                 console.log(`[Stripe Webhook] Ignored event: ${event.type}`);
         }
