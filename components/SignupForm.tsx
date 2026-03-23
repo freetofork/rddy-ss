@@ -5,7 +5,7 @@ import { Label } from "@/components/ui/label"
 import { useFormState, useFormStatus } from 'react-dom'
 import { signup } from '@/app/auth/actions'
 
-export default function SignupForm() {
+export default function SignupForm({ plan }: { plan?: string }) {
     const initialState = {
         message: ''
     }
@@ -15,6 +15,7 @@ export default function SignupForm() {
 
     return (
         <form action={formAction}>
+            <input type="hidden" name="plan" value={plan || ''} />
             <div className="grid gap-2">
                 <Label htmlFor="name">Name</Label>
                 <Input
