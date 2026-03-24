@@ -49,14 +49,14 @@ export default function PrivacyPolicy() {
           <section>
             <h2 className="text-2xl font-bold mb-4">3. Artificial Intelligence (Ruddynie)</h2>
             <p className="mb-4">
-              Ruddy features an advanced AI agent ("Ruddynie"). To protect your privacy, Ruddy uses a <strong>Bring Your Own Key (BYOK)</strong> model.
+              Ruddy features an advanced AI agent (&quot;Ruddynie&quot;). To protect your privacy, Ruddy uses a <strong>Bring Your Own Key (BYOK)</strong> model.
             </p>
             <ul className="list-disc pl-6 space-y-2 text-[#4F2C1E]/90 mb-6">
               <li>
-                Your API keys (OpenAI, Anthropic, Gemini, OpenRouter) are securely vaulted in your local macOS Keychain/LocalStorage. They are <strong>never</strong> transmitted to Ruddy's servers.
+                Your API keys (OpenAI, Anthropic, Gemini, OpenRouter) are securely vaulted in your local macOS Keychain/LocalStorage. They are <strong>never</strong> transmitted to Ruddy&apos;s servers.
               </li>
               <li>
-                When you interact with the agent, your prompts and contextual schema are sent <strong>directly</strong> from your computer to your chosen AI provider. You remain fully bound by your chosen provider's individual Privacy Policy regarding AI training and data retention.
+                When you interact with the agent, your prompts and contextual schema are sent <strong>directly</strong> from your computer to your chosen AI provider. You remain fully bound by your chosen provider&apos;s individual Privacy Policy regarding AI training and data retention.
               </li>
             </ul>
           </section>
@@ -74,7 +74,7 @@ export default function PrivacyPolicy() {
               You maintain absolute control over the limited data we hold. You have the right to request access to, correction of, or complete erasure of your data.
             </p>
             <p className="mb-4 p-4 bg-[#FFF5E6] border border-[#F0E6D3] rounded-xl text-[#4F2C1E]/90 text-sm">
-              <strong>Right to Erasure ("Right to be Forgotten"):</strong> You can instantly permanently delete your email, active License Keys, and active Stripe subscription identifiers by clicking the red <strong>"Delete Account Permanently"</strong> button found securely inside the `Account & Subscription` modal on your Ruddy Desktop Interface. This executes an unrecoverable hard-delete across our entire Supabase infrastructure.
+              <strong>Right to Erasure (&quot;Right to be Forgotten&quot;):</strong> You can instantly permanently delete your email, active License Keys, and active Stripe subscription identifiers by clicking the red <strong>&quot;Delete Account Permanently&quot;</strong> button found securely inside the Account &amp; Subscription modal on your Ruddy Desktop Interface. This executes an unrecoverable hard-delete across our entire Supabase infrastructure.
             </p>
           </section>
 
