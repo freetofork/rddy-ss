@@ -73,7 +73,7 @@ export default function SecurityAudit() {
           <section>
             <h2 className="text-2xl font-bold mb-4 flex items-center gap-3">
               <span className="px-3 py-1 bg-yellow-400 text-yellow-900 rounded-lg text-xs tracking-widest uppercase font-black">Frontend</span>
-              React/Node GUI Thread
+              GUI Thread
             </h2>
             
             <div className="bg-white border border-[#F0E6D3] rounded-2xl shadow-sm p-6 mb-4">
