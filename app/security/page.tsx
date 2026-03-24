@@ -25,7 +25,7 @@ export default function SecurityAudit() {
           <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight">Security Audit</h1>
         </div>
         <p className="text-muted-foreground mb-12 text-sm leading-relaxed max-w-2xl">
-          At Ruddy, we believe that desktop software accessing local architecture should be aggressively audited. Below are the official unedited <strong>Cargo (Rust)</strong> and <strong>NPM (React)</strong> vulnerability audit tables automatically generated via industry-standard open source scanners.
+          At Ruddy, we believe that desktop software accessing local architecture should be aggressively audited. Below are the official unedited <strong>Cargo (Rust/Backend)</strong> and <strong>NPM (Front-End)</strong> vulnerability audit tables automatically generated via industry-standard open source scanners.
         </p>
 
         <div className="space-y-12">
@@ -33,7 +33,7 @@ export default function SecurityAudit() {
           <section>
             <h2 className="text-2xl font-bold mb-4 flex items-center gap-3">
               <span className="px-3 py-1 bg-[#1A96E8] text-white rounded-lg text-xs tracking-widest uppercase font-black">Backend</span>
-              Rust/Tauri Native Engine
+              Rust Native Engine
             </h2>
             <div className="overflow-x-auto bg-white border border-[#F0E6D3] rounded-2xl shadow-sm">
               <table className="w-full border-collapse text-left text-sm text-[#4F2C1E]/90">
