@@ -92,7 +92,7 @@ export default async function LandingPage() {
                   </h1>
                 </div>
                 <p className="text-muted-foreground text-sm md:text-base">
-                  Local and cloud data natively with DuckDB and AI 
+                  Query local and cloud data natively with DuckDB.
                 </p>
               </div>
               <div className="flex items-center gap-3 mt-4">
@@ -302,7 +302,9 @@ export default async function LandingPage() {
         <p className="text-xs text-muted-foreground">© 2026 Ruddy. All rights reserved.</p>
         <div className="flex items-center gap-2">
            {/* eslint-disable-next-line @next/next/no-img-element */}
-           <img src="https://img.shields.io/badge/vulnerabilities-0-success?style=flat-square&logo=security" alt="Security Scan: 0 Vulnerabilities" className="h-4 rounded-sm" />
+           <Link href="/security" className="hover:opacity-80 transition-opacity" title="View Security Audits">
+             <img src="https://img.shields.io/badge/vulnerabilities-0-success?style=flat-square&logo=security" alt="Security Scan: 0 Vulnerabilities" className="h-4 rounded-sm" />
+           </Link>
         </div>
         <nav className="sm:ml-auto flex gap-4 sm:gap-6 mt-4 sm:mt-0">
           <Link className="text-xs hover:underline underline-offset-4" href="/terms">
