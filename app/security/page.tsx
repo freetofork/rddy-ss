@@ -79,7 +79,7 @@ export default function SecurityAudit() {
             <div className="bg-white border border-[#F0E6D3] rounded-2xl shadow-sm p-6 mb-4">
               <div className="flex flex-col gap-6">
                 <div>
-                  <h3 className="font-bold text-lg mb-1 tracking-tight">NPM Security Scan</h3>
+                  <h3 className="font-bold text-lg mb-1 tracking-tight">Security Scan</h3>
                   <p className="text-sm text-[#4F2C1E]/70 mb-4">
                     The frontend interface dependencies were audited successfully using the official Node pipeline.
                   </p>
