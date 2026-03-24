@@ -136,7 +136,7 @@ export default async function LandingPage() {
                     <UserCheck className="h-6 w-6 text-primary" />
                   </div>
                   <h3 className="text-xl font-bold">Code & Linter</h3>
-                  <p className="text-muted-foreground text-center">Execute Python or SQL code in custom notebooks. Install your own native libraries.<br/>Built-in SQL Linter.</p>
+                  <p className="text-muted-foreground text-center">Execute Python or SQL code in custom notebooks. Install your own native libraries.<br />Built-in SQL Linter.</p>
                 </div>
                 <div className="flex flex-col items-center space-y-2 border-muted-foreground/10 p-4 rounded-lg">
                   <div className="p-2 bg-primary/10 rounded-full">
@@ -315,14 +315,14 @@ export default async function LandingPage() {
         <p className="text-xs text-muted-foreground">© 2026 Ruddy. All rights reserved.</p>
         <nav className="sm:ml-auto flex items-center gap-4 sm:gap-6 mt-4 sm:mt-0">
           <Link href="/security" className="flex items-center gap-2 hover:opacity-80 transition-opacity" title="View Security Audits">
-             {/* eslint-disable-next-line @next/next/no-img-element */}
-             <img src="https://img.shields.io/badge/vulnerabilities-0-success?style=flat-square&logo=security" alt="Security Scan: 0 Vulnerabilities" className="h-4 rounded-sm" />
-             <span className="text-xs font-bold text-muted-foreground hover:underline underline-offset-4">View Report</span>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="https://img.shields.io/badge/vulnerabilities-0-success?style=flat-square&logo=security" alt="Security Scan: 0 Vulnerabilities" className="h-4 rounded-sm" />
+            <span className="text-xs font-bold text-muted-foreground hover:underline underline-offset-4">View Report</span>
           </Link>
           <Link className="text-xs hover:underline underline-offset-4 text-muted-foreground" href="/terms">
             Terms of Service
           </Link>
-          <Link className="text-xs hover:underline underline-offset-4 text-muted-foreground" href="#">
+          <Link className="text-xs hover:underline underline-offset-4 text-muted-foreground" href="/privacy">
             Privacy
           </Link>
         </nav>
