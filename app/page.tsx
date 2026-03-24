@@ -163,8 +163,8 @@ export default async function LandingPage() {
                   <div className="p-2 bg-primary/10 rounded-full">
                     <Bot className="h-6 w-6 text-primary" />
                   </div>
-                  <h3 className="text-xl font-bold">Ruddynie</h3>
-                  <p className="text-muted-foreground text-center">Meet our smart agent. She can execute queries, full analysis on notebooks and connect to MCP&apos;s.</p>
+                  <h3 className="text-xl font-bold">Ruddynie AI</h3>
+                  <p className="text-muted-foreground text-center">Meet our smart agent. She can execute queries, full analysis on notebooks and connect to MCP&apos;s. Bring Your Own (BYO) AI model: Gemini, Claude, OpenAI, and OpenRouter.</p>
                 </div>
               </div>
             </div>
@@ -174,7 +174,7 @@ export default async function LandingPage() {
           <section className="w-full py-10 md:py-20 lg:py-32" id="testimonials">
             <div className="container px-4 md:px-6">
               <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl text-center mb-4">Upcoming</h2>
-              <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 mt-8">
+              <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4 mt-8">
                 <Card>
                   <CardContent className="p-6 flex flex-col h-full">
                     <div className="flex items-center justify-between mb-4">
@@ -182,6 +182,19 @@ export default async function LandingPage() {
                         <Bot className="w-6 h-6 text-primary" />
                       </div>
                       <span className="text-xl font-black text-primary/20">#1</span>
+                    </div>
+                    <h3 className="font-bold text-lg mb-2">Ruddynie Features</h3>
+                    <p className="text-sm text-muted-foreground mb-4">We will integrate more specialized agent skills and additional open-source LLM models.</p>
+                    <div className="flex items-center gap-1.5 text-xs text-amber-600 bg-amber-100/50 w-fit px-2.5 py-1 rounded-md font-medium mt-auto"><Clock className="w-3.5 h-3.5" /> Coming soon</div>
+                  </CardContent>
+                </Card>
+                <Card>
+                  <CardContent className="p-6 flex flex-col h-full">
+                    <div className="flex items-center justify-between mb-4">
+                      <div className="p-2 bg-primary/10 rounded-lg">
+                        <Bot className="w-6 h-6 text-primary" />
+                      </div>
+                      <span className="text-xl font-black text-primary/20">#2</span>
                     </div>
                     <h3 className="font-bold text-lg mb-2">Ruddy Agent</h3>
                     <p className="text-sm text-muted-foreground mb-4">A full AI agent powering your experience. Executing queries and more.</p>
@@ -194,11 +207,11 @@ export default async function LandingPage() {
                       <div className="p-2 bg-primary/10 rounded-lg">
                         <BarChart4 className="w-6 h-6 text-primary" />
                       </div>
-                      <span className="text-xl font-black text-primary/20">#2</span>
+                      <span className="text-xl font-black text-primary/20">#3</span>
                     </div>
                     <h3 className="font-bold text-lg mb-2">Native Charts</h3>
                     <p className="text-sm text-muted-foreground mb-4">Graphical outputs directly in the SQL Console. Multiple colors to customize.</p>
-                    <div className="flex items-center gap-1.5 text-xs text-amber-600 bg-amber-100/50 w-fit px-2.5 py-1 rounded-md font-medium mt-auto"><Clock className="w-3.5 h-3.5" /> Coming soon</div>
+                    <div className="flex items-center gap-1.5 text-xs text-emerald-600 bg-emerald-100/50 w-fit px-2.5 py-1 rounded-md font-medium mt-auto"><CheckCircle2 className="w-3.5 h-3.5" /> Implemented</div>
                   </CardContent>
                 </Card>
                 <Card>
@@ -207,7 +220,7 @@ export default async function LandingPage() {
                       <div className="p-2 bg-primary/10 rounded-lg">
                         <CloudDownload className="w-6 h-6 text-primary" />
                       </div>
-                      <span className="text-xl font-black text-primary/20">#3</span>
+                      <span className="text-xl font-black text-primary/20">#4</span>
                     </div>
                     <h3 className="font-bold text-lg mb-2">Cloud Expansion</h3>
                     <p className="text-sm text-muted-foreground mb-4">More cloud and remote data sources (Buckets, HTTPS etc)</p>
