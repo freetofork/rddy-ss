@@ -31,7 +31,7 @@ export default function PrivacyPolicy() {
           <section>
             <h2 className="text-2xl font-bold mb-4">2. What We Collect (Website & Billing)</h2>
             <p className="mb-4">
-              While the Desktop application is offline by default, our licensing and billing website (<code>rddy-ss</code>) collects the following minimal information strictly to facilitate account access:
+              While the Desktop application is offline by default, our licensing and billing website (<code>ruddy.pro</code>) collects the following minimal information strictly to facilitate account access:
             </p>
             <ul className="list-disc pl-6 space-y-2 text-[#4F2C1E]/90">
               <li>
@@ -41,7 +41,7 @@ export default function PrivacyPolicy() {
                 <strong>Payment Information:</strong> Processed entirely by our secure third-party vendor (<strong>Stripe</strong>). We do not store or process full credit card numbers on our own servers.
               </li>
               <li>
-                <strong>IP Addresses & User Agents:</strong> Temporarily logged by our CDN (Cloudflare/Vercel) solely for DDoS protection and basic security rate-limiting.
+                <strong>IP Addresses & User Agents:</strong> Temporarily logged by our industry leading CDN partners solely for DDoS protection and basic security rate-limiting.
               </li>
             </ul>
           </section>
