@@ -9,14 +9,14 @@ export function DownloadModal() {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleDownload = () => {
-    window.location.href = "https://pub-66f67f4a3e74412c91eeedaff15ae554.r2.dev/Ruddy_1.0.0-rc.3_aarch64.dmg";
+    window.location.href = "https://pub-66f67f4a3e74412c91eeedaff15ae554.r2.dev/Ruddy_1.0.0-rc.2_aarch64.dmg";
     // Close modal after a short delay
     setTimeout(() => setIsOpen(false), 2000);
   };
 
   return (
     <>
-      <Button 
+      <Button
         onClick={() => setIsOpen(true)}
         className="gap-2 shadow-lg shadow-[#1A96E8]/20 bg-[#1A96E8] hover:bg-[#137ABE] text-white"
       >
@@ -35,7 +35,7 @@ export function DownloadModal() {
 
             <div className="flex flex-col items-center text-center space-y-4">
               <Image src="/ruddy-icon.png" alt="Ruddy" width={64} height={64} className="rounded-xl shadow-md mb-2" />
-              
+
               <h2 className="text-2xl font-black text-[#4F2C1E] tracking-tight">
                 Almost there!
               </h2>
@@ -45,11 +45,11 @@ export function DownloadModal() {
                   <AlertTriangle className="w-5 h-5 text-amber-600" />
                   <h3>Initial Launch Instructions</h3>
                 </div>
-                
+
                 <p className="text-sm text-amber-900/80 leading-relaxed font-medium">
                   Because Ruddy is a brand new application, macOS Gatekeeper might show an &quot;unverified developer&quot; warning on your first launch.
                 </p>
-                
+
                 <div className="bg-amber-200/40 p-3 rounded-xl border border-amber-200/60 mt-2">
                   <p className="text-sm font-bold text-amber-900">
                     To open Ruddy the first time:
@@ -61,6 +61,20 @@ export function DownloadModal() {
                     <li>Click <span className="font-bold">&quot;Open anyway&quot;</span> on the prompt</li>
                   </ol>
                 </div>
+                
+                <div className="bg-red-50/50 p-3 rounded-xl border border-red-200/60 mt-3">
+                  <p className="text-xs font-bold text-red-900 mb-1 flex items-center gap-1.5">
+                    <AlertTriangle className="w-3.5 h-3.5" />
+                    If macOS says the app is "Damaged":
+                  </p>
+                  <p className="text-[11px] text-red-900/80 leading-tight mb-2">
+                    Apple aggressively flags early-access apps. Open your <span className="font-bold">Terminal</span> and run this exact command to remove the quarantine flag:
+                  </p>
+                  <code className="block bg-red-900/10 text-red-900 px-2.5 py-1.5 rounded-lg text-[10px] font-mono break-all selection:bg-red-200">
+                    xattr -cr /Applications/Ruddy.app
+                  </code>
+                </div>
+
                 <p className="text-xs text-amber-900/60 italic font-medium mt-2">
                   After doing this once, you can open it normally forever!
                 </p>
