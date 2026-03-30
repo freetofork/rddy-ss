@@ -65,7 +65,7 @@ export function DownloadModal() {
                 <div className="bg-red-50/50 p-3 rounded-xl border border-red-200/60 mt-3">
                   <p className="text-xs font-bold text-red-900 mb-1 flex items-center gap-1.5">
                     <AlertTriangle className="w-3.5 h-3.5" />
-                    If macOS says the app is "Damaged":
+                    If macOS says the app is &quot;Damaged&quot;:
                   </p>
                   <p className="text-[11px] text-red-900/80 leading-tight mb-2">
                     Apple aggressively flags early-access apps. Open your <span className="font-bold">Terminal</span> and run this exact command to remove the quarantine flag:
