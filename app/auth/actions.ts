@@ -2,7 +2,7 @@
 import { createClient } from '@/utils/supabase/server'
 import { redirect } from "next/navigation"
 import { revalidatePath } from 'next/cache'
-import { createStripeCustomer } from '@/utils/stripe/api'
+import { createStripeCustomer, createTrialCheckoutSession } from '@/utils/stripe/api'
 import { db } from '@/utils/db/db'
 import { usersTable } from '@/utils/db/schema'
 import { eq } from 'drizzle-orm'
@@ -103,11 +103,18 @@ export async function signup(currentState: { message: string }, formData: FormDa
 
     const plan = formData.get('plan') as string;
     revalidatePath("/", "layout")
+    
     if (plan) {
-        redirect(`/subscribe?plan=${plan}`)
-    } else {
-        redirect("/subscribe")
-    }
+        try {
+            const checkoutUrl = await createTrialCheckoutSession(data.email, plan);
+            if (checkoutUrl) redirect(checkoutUrl);
+        } catch (e) {
+            console.error("Failed to create checkout session:", e);
+            redirect(`/login?message=Account created but checkout failed.`);
+        }
+    } 
+    
+    redirect("/subscribe/success");
 }
 
 
