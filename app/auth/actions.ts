@@ -105,21 +105,23 @@ export async function signup(currentState: { message: string }, formData: FormDa
     revalidatePath("/", "layout")
     
     let checkoutUrl: string | null = null;
+    let stripeError: string = "";
 
     if (plan) {
         try {
             checkoutUrl = await createTrialCheckoutSession(data.email, plan);
-        } catch (e) {
+        } catch (e: any) {
             console.error("Failed to create checkout session:", e);
+            stripeError = e.message || "Unknown Stripe SDK Error";
         }
     } 
     
     if (checkoutUrl) {
-        // Must be called entirely outside of Try/Catch blocks in NextJS!
         redirect(checkoutUrl);
+    } else if (stripeError) {
+        redirect(`/login?message=Stripe Error: ${encodeURIComponent(stripeError)}`);
     } else {
-        // If they had no plan selected, redirect them to login so they can pick one
-        redirect("/login?message=Account created! Please check your email for the Magic Link to login and subscribe.");
+        redirect(`/login?message=Account created without a plan! Please login and navigate to the pricing page. Check your email for the Magic Link.`);
     }
 }
 
