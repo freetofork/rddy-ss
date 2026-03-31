@@ -4,7 +4,10 @@ import Image from 'next/image'
 import SignupForm from "@/components/SignupForm"
 import ProviderSigninBlock from "@/components/ProviderSigninBlock"
 
-export default function Signup() {
+export const dynamic = 'force-dynamic'
+
+export default function Signup({ searchParams }: { searchParams: { plan?: string } }) {
+    const plan = searchParams?.plan;
     return (
         <div className="relative flex items-center justify-center min-h-screen bg-muted p-4 md:p-8">
             <div className="container max-w-6xl flex flex-col md:flex-row items-center gap-8 lg:gap-16">
@@ -26,13 +29,13 @@ export default function Signup() {
                             <CardDescription className="text-foreground/60">Create your account now!</CardDescription>
                         </CardHeader>
                         <CardContent className="grid gap-4 relative z-10">
-                            <SignupForm />
+                            <SignupForm plan={plan} />
                             <div className="relative border-t border-border/50 my-2 pt-4">
                                 <div className="absolute inset-0 flex items-center justify-center -top-[1.5px]">
                                     <span className="bg-background px-2 text-[10px] uppercase font-bold tracking-widest text-muted-foreground/60">Or continue with</span>
                                 </div>
                             </div>
-                            <ProviderSigninBlock />
+                            <ProviderSigninBlock plan={plan} />
                         </CardContent>
                         <CardFooter className="flex-col text-center relative z-10 pb-8 pt-2">
                             <Link className="text-sm font-medium text-foreground/60 hover:text-primary transition-colors" href="/login">
