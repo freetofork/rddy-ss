@@ -104,17 +104,23 @@ export async function signup(currentState: { message: string }, formData: FormDa
     const plan = formData.get('plan') as string;
     revalidatePath("/", "layout")
     
+    let checkoutUrl: string | null = null;
+
     if (plan) {
         try {
-            const checkoutUrl = await createTrialCheckoutSession(data.email, plan);
-            if (checkoutUrl) redirect(checkoutUrl);
+            checkoutUrl = await createTrialCheckoutSession(data.email, plan);
         } catch (e) {
             console.error("Failed to create checkout session:", e);
-            redirect(`/login?message=Account created but checkout failed.`);
         }
     } 
     
-    redirect("/subscribe/success");
+    if (checkoutUrl) {
+        // Must be called entirely outside of Try/Catch blocks in NextJS!
+        redirect(checkoutUrl);
+    } else {
+        // If they had no plan selected, redirect them to login so they can pick one
+        redirect("/login?message=Account created! Please check your email for the Magic Link to login and subscribe.");
+    }
 }
 
 
