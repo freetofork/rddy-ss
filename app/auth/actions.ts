@@ -121,7 +121,7 @@ export async function signup(currentState: { message: string }, formData: FormDa
     } else if (stripeError) {
         redirect(`/login?message=Stripe Error: ${encodeURIComponent(stripeError)}`);
     } else {
-        redirect(`/login?message=Account created without a plan! Please login and navigate to the pricing page. Check your email for the Magic Link.`);
+        redirect(`/login?message=System Diagnostics: Plan[${plan || 'EMPTY'}] | Url[${checkoutUrl || 'NULL'}] | Stripe[${stripeError || 'EMPTY'}]`);
     }
 }
 
