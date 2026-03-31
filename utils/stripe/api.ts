@@ -72,7 +72,7 @@ export async function createTrialCheckoutSession(email: string, productId: strin
         customer: user[0].stripe_id,
         mode: isSubscription ? 'subscription' : 'payment',
         line_items: [{ price: price.id, quantity: 1 }],
-        success_url: `${PUBLIC_URL}/dashboard?success=true`,
+        success_url: `${PUBLIC_URL}/subscribe/success`,
         cancel_url: `${PUBLIC_URL}/dashboard?canceled=true`,
         payment_method_collection: 'if_required',
     }
