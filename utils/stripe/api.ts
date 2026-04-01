@@ -74,7 +74,7 @@ export async function createTrialCheckoutSession(email: string, productId: strin
         line_items: [{ price: price.id, quantity: 1 }],
         success_url: `${PUBLIC_URL}/subscribe/success`,
         cancel_url: `${PUBLIC_URL}/dashboard?canceled=true`,
-        payment_method_collection: 'if_required',
+        ...(isSubscription ? { payment_method_collection: 'if_required' } : {})
     }
 
     // 4. Force inject the 7-day trial explicitly for subscriptions
