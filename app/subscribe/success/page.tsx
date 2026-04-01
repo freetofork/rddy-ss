@@ -13,12 +13,12 @@ export default function SubscribeSuccess() {
                 <CardHeader className="space-y-1">
                     <div className="flex justify-center py-4">
                         <Link href='/'>
-                            <Image src="/logo.png" alt="logo" width={50} height={50} />
+                            <Image src="/ruddy-icon.png" alt="logo" width={50} height={50} className="rounded-xl shadow-md" />
                         </Link>
                     </div>
 
-                    <CardTitle className="text-2xl font-bold">Success</CardTitle>
-                    <CardDescription>Thank you for subscribing!</CardDescription>
+                    <CardTitle className="text-2xl font-bold">Thank you!</CardTitle>
+                    <CardDescription>Start diving!</CardDescription>
                 </CardHeader>
 
                 <CardFooter className="flex-col text-center">
