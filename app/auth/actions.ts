@@ -61,6 +61,36 @@ export async function signup(currentState: { message: string }, formData: FormDa
         return { message: "An account with this email already exists. Please login instead." }
     }
 
+    // TrueList Email Verification
+    if (process.env.TRUELIST_API_KEY) {
+        try {
+            const truelistRes = await fetch('https://api.truelist.io/v1/verify', {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${process.env.TRUELIST_API_KEY}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ email: data.email })
+            });
+
+            if (truelistRes.ok) {
+                const validation = await truelistRes.json();
+                const result = String(validation.result || validation.status || '').toLowerCase();
+                const isDisposable = validation.disposable === true || result === 'disposable';
+                const isInvalid = result === 'invalid' || result === 'undeliverable';
+                
+                if (isInvalid || isDisposable) {
+                     return { message: "Please provide a valid, non-disposable email address." };
+                }
+            } else {
+                console.warn(`TrueList API returned status ${truelistRes.status}`);
+            }
+        } catch (e) {
+            console.error("TrueList API fetch error:", e);
+            // Fail open strategy: assume valid if network/API fails
+        }
+    }
+
     const { data: signUpData, error: signUpError } = await supabase.auth.signUp({
         email: data.email,
         password: data.password,
