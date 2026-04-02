@@ -54,6 +54,11 @@ export async function signup(currentState: { message: string }, formData: FormDa
         name: formData.get('name') as string,
     }
 
+    // Block alias trick instantly
+    if (data.email.includes('+')) {
+        return { message: "Email aliases containing '+' are not permitted for registration." };
+    }
+
     // Check if user exists in our database first
     const existingDBUser = await db.select().from(usersTable).where(eq(usersTable.email, data.email))
 
