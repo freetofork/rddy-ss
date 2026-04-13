@@ -2,65 +2,23 @@ import { Button } from "@/components/ui/button"
 import Image from "next/image"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from "@/components/ui/card"
 import Link from "next/link"
-import { Star, Check, Coins, UserCheck, Database, Activity, Map, CloudDownload, BarChart4, Network, Sparkles, SlidersHorizontal, Bot, CheckCircle2, Clock } from "lucide-react"
+import { Check, Coins, UserCheck, Database, Activity, Map, CloudDownload, BarChart4, Bot, CheckCircle2, Clock } from "lucide-react"
 import { ImageSlider } from "@/components/image-slider"
 import { DownloadModal } from "@/components/DownloadModal"
 import { ScrollReveal } from "@/components/scroll-reveal"
-import Stripe from 'stripe'
 
-// Types
-interface StripeProduct {
-  id: string;
-  name: string;
-  description: string | null;
-  features: string[];
-  price: Stripe.Price;
-}
-
-// This makes the page dynamic instead of static
-export const revalidate = 3600 // Revalidate every hour
-
-async function getStripeProducts(): Promise<StripeProduct[]> {
-  if (!process.env.STRIPE_SECRET_KEY) {
-    console.warn("STRIPE_SECRET_KEY is missing. Using dummy products to prevent SSR crash.");
-    return [
-      {
-        id: "prod_dummy1",
-        name: "Starter Plan",
-        description: "Perfect for testing the waters",
-        features: ["Access to basic features", "Community Support", "1 Project"],
-        price: { unit_amount: 900, recurring: { interval: "month" } } as any
-      },
-      {
-        id: "prod_dummy2",
-        name: "Pro Plan",
-        description: "For serious builders",
-        features: ["Everything in Starter", "Priority Support", "Unlimited Projects"],
-        price: { unit_amount: 2900, recurring: { interval: "month" } } as any
-      }
-    ];
-  }
-
-  const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
-    apiVersion: '2024-06-20'
-  });
-
-  const products = await stripe.products.list({
-    active: true,
-    expand: ['data.default_price']
-  });
-
-  return products.data.map(product => ({
-    id: product.id,
-    name: product.name,
-    description: product.description,
-    features: product.metadata?.features ? JSON.parse(product.metadata.features) : [],
-    price: product.default_price as Stripe.Price
-  })).sort((a, b) => (a.price.unit_amount || 0) - (b.price.unit_amount || 0));
-}
+const DIVER_FEATURES = [
+  "Native DuckDB engine (zero WASM overhead)",
+  "SQL & Python notebooks",
+  "Built-in SQL linter",
+  "Catalog explorer & ERD",
+  "Local files & cloud data sources",
+  "Advanced geospatial & maps",
+  "Ruddynie AI agent (BYO model)",
+  "Lifetime updates",
+];
 
 export default async function LandingPage() {
-  const products = await getStripeProducts();
 
   return (
     <div className="flex flex-col min-h-[100dvh]">
@@ -234,52 +192,38 @@ export default async function LandingPage() {
         <ScrollReveal>
           <section className="w-full py-10 md:py-20 lg:py-32 bg-muted" id="pricing">
             <div className="container px-4 md:px-6">
-              <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl text-center mb-4">Pricing Plans</h2>
-              <p className="text-muted-foreground text-center mb-8 md:text-xl">Early &quot;Duck&quot; Access. 7-day free trial. Join our limited first wave of divers with locked-in legacy rates.</p>
-              <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 max-w-5xl mx-auto items-stretch place-content-center">
-                {products.map((product) => (
-                  <Card key={product.id} className="flex flex-col h-full">
-                    <CardHeader className="p-6 pb-2">
-                      <CardTitle className="text-xl md:text-2xl font-display">{product.name}</CardTitle>
-                      <CardDescription className="text-sm mt-1">{product.description}</CardDescription>
-                    </CardHeader>
-                    <CardContent className="flex-1 flex flex-col p-6 pt-0">
-                      <div className="mb-6">
-                        <p className="text-3xl md:text-4xl font-bold font-display tracking-tight">
-                          {product.price.unit_amount
-                            ? `$${(product.price.unit_amount / 100).toFixed(2)}`
-                            : 'Custom'}
-                          <span className="text-lg md:text-xl font-normal text-muted-foreground tracking-normal block mt-1">
-                            {(() => {
-                              if (!product.price.recurring) return '';
-                              const { interval, interval_count = 1 } = product.price.recurring;
-                              if (interval === 'month' && interval_count === 3) return 'For 3 Months';
-                              if (interval === 'month' && interval_count === 6) return 'For 6 Months';
-                              if (interval === 'year' || (interval === 'month' && interval_count === 12)) return 'For 1 Year';
-                              return `per ${interval}`;
-                            })()}
-                          </span>
-                        </p>
-                      </div>
-                      <ul className="space-y-3 flex-1">
-                        {product.features?.map((feature, index) => (
-                          <li key={index} className="flex items-start">
-                            <Check className="mr-2 h-4 w-4 text-primary shrink-0 transition-opacity opacity-80" />
-                            <span className="text-foreground/80 leading-snug text-sm">{feature}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </CardContent>
-                    <CardFooter className="p-6 pt-4 mt-auto">
-                      <Link
-                        className="w-full"
-                        href={`/signup?plan=${product.id}`}
-                      >
-                        <Button className="w-full text-sm h-10">Get Started</Button>
-                      </Link>
-                    </CardFooter>
-                  </Card>
-                ))}
+              <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl text-center mb-4">Pricing</h2>
+              <p className="text-muted-foreground text-center mb-8 md:text-xl">Buy once, use forever. No subscriptions.</p>
+              <div className="max-w-md mx-auto">
+                <Card className="flex flex-col h-full">
+                  <CardHeader className="p-6 pb-2">
+                    <CardTitle className="text-xl md:text-2xl font-display">Diver</CardTitle>
+                    <CardDescription className="text-sm mt-1">Full lifetime access to Ruddy</CardDescription>
+                  </CardHeader>
+                  <CardContent className="flex-1 flex flex-col p-6 pt-0">
+                    <div className="mb-6">
+                      <p className="text-3xl md:text-4xl font-bold font-display tracking-tight">
+                        $13.99
+                        <span className="text-lg md:text-xl font-normal text-muted-foreground tracking-normal block mt-1">
+                          One-time payment
+                        </span>
+                      </p>
+                    </div>
+                    <ul className="space-y-3 flex-1">
+                      {DIVER_FEATURES.map((feature, index) => (
+                        <li key={index} className="flex items-start">
+                          <Check className="mr-2 h-4 w-4 text-primary shrink-0 transition-opacity opacity-80" />
+                          <span className="text-foreground/80 leading-snug text-sm">{feature}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </CardContent>
+                  <CardFooter className="p-6 pt-4 mt-auto">
+                    <Link className="w-full" href="/signup">
+                      <Button className="w-full text-sm h-10">Get Ruddy</Button>
+                    </Link>
+                  </CardFooter>
+                </Card>
               </div>
             </div>
           </section>
