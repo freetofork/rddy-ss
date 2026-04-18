@@ -8,14 +8,11 @@ import { DownloadModal } from "@/components/DownloadModal"
 import { ScrollReveal } from "@/components/scroll-reveal"
 
 const DIVER_FEATURES = [
-  "Native DuckDB engine (zero WASM overhead)",
-  "SQL & Python notebooks",
-  "Built-in SQL linter",
-  "Catalog explorer & ERD",
-  "Local files & cloud data sources",
-  "Advanced geospatial & maps",
-  "Ruddynie AI agent (BYO model)",
-  "Lifetime updates",
+  "All features inlcuded",
+  "Native DuckDB engine (zero WASM overhead) and SQL & Python notebooks",
+  "Ruddynie AI agent (BYO model) and Lifetime updates",
+  "Local files & cloud data sources and Advanced geospatial & maps",
+  "Built-in SQL linter and Catalog explorer & ERD"
 ];
 
 export default async function LandingPage() {
@@ -205,7 +202,7 @@ export default async function LandingPage() {
                       <p className="text-3xl md:text-4xl font-bold font-display tracking-tight">
                         $13.99
                         <span className="text-lg md:text-xl font-normal text-muted-foreground tracking-normal block mt-1">
-                          One-time payment
+                          Pay What You Want 
                         </span>
                       </p>
                     </div>
