@@ -6,13 +6,17 @@ import { Check, Coins, UserCheck, Database, Activity, Map, CloudDownload, BarCha
 import { ImageSlider } from "@/components/image-slider"
 import { DownloadModal } from "@/components/DownloadModal"
 import { ScrollReveal } from "@/components/scroll-reveal"
+import { BuyMeACoffee } from "@/components/BuyMeACoffee"
 
 const DIVER_FEATURES = [
-  "All features inlcuded",
-  "Native DuckDB engine (zero WASM overhead) and SQL & Python notebooks",
-  "Ruddynie AI agent (BYO model) and Lifetime updates",
-  "Local files & cloud data sources and Advanced geospatial & maps",
-  "Built-in SQL linter and Catalog explorer & ERD"
+  "Native DuckDB engine (zero WASM overhead)",
+  "SQL & Python notebooks",
+  "Built-in SQL linter",
+  "Catalog explorer & ERD",
+  "Local files & cloud data sources",
+  "Advanced geospatial & maps",
+  "Ruddynie AI agent (BYO model)",
+  "Lifetime updates",
 ];
 
 export default async function LandingPage() {
@@ -202,7 +206,7 @@ export default async function LandingPage() {
                       <p className="text-3xl md:text-4xl font-bold font-display tracking-tight">
                         $13.99
                         <span className="text-lg md:text-xl font-normal text-muted-foreground tracking-normal block mt-1">
-                          Pay What You Want 
+                          One-time payment
                         </span>
                       </p>
                     </div>
@@ -249,6 +253,11 @@ export default async function LandingPage() {
                 </div>
               </div>
             </div>
+          </section>
+        </ScrollReveal>
+        <ScrollReveal>
+          <section className="w-full py-8 md:py-12 flex justify-center">
+            <BuyMeACoffee />
           </section>
         </ScrollReveal>
       </main>
