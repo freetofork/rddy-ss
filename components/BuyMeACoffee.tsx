@@ -11,12 +11,41 @@ export function BuyMeACoffee() {
     if (container.dataset.bmcLoaded === "true") return;
     container.dataset.bmcLoaded = "true";
 
-    const html = `<script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="ruddyide" data-color="#41a4ff" data-emoji="" data-font="Inter" data-text="🦆 Buy me a coffee ☕" data-outline-color="#000000" data-font-color="#000000" data-coffee-color="#FFDD00"></script>`;
+    const script = document.createElement("script");
+    script.src = "https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js";
+    script.setAttribute("data-name", "bmc-button");
+    script.setAttribute("data-slug", "ruddyide");
+    script.setAttribute("data-color", "#41a4ff");
+    script.setAttribute("data-emoji", "");
+    script.setAttribute("data-font", "Inter");
+    script.setAttribute("data-text", "🦆 Buy me a coffee ☕");
+    script.setAttribute("data-outline-color", "#000000");
+    script.setAttribute("data-font-color", "#000000");
+    script.setAttribute("data-coffee-color", "#FFDD00");
 
-    const range = document.createRange();
-    range.selectNode(container);
-    const fragment = range.createContextualFragment(html);
-    container.appendChild(fragment);
+    document.body.appendChild(script);
+
+    const originalWriteln = document.writeln.bind(document);
+    const originalWrite = document.write.bind(document);
+    let captured = "";
+
+    document.writeln = (markup: string) => {
+      captured += markup + "\n";
+    };
+    document.write = (markup: string) => {
+      captured += markup;
+    };
+
+    const restore = () => {
+      document.writeln = originalWriteln;
+      document.write = originalWrite;
+      if (captured) {
+        container.innerHTML = captured;
+      }
+    };
+
+    script.addEventListener("load", restore);
+    script.addEventListener("error", restore);
   }, []);
 
   return <div ref={containerRef} className="flex justify-center" />;
