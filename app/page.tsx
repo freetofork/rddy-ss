@@ -206,7 +206,7 @@ export default async function LandingPage() {
                       <p className="text-3xl md:text-4xl font-bold font-display tracking-tight">
                         $13.99
                         <span className="text-lg md:text-xl font-normal text-muted-foreground tracking-normal block mt-1">
-                          One-time payment
+                          Suggested One-time payment
                         </span>
                       </p>
                     </div>
