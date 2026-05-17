@@ -194,7 +194,7 @@ export default async function LandingPage() {
           <section className="w-full py-10 md:py-20 lg:py-32 bg-muted" id="pricing">
             <div className="container px-4 md:px-6">
               <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl text-center mb-4">Pricing</h2>
-              <p className="text-muted-foreground text-center mb-8 md:text-xl">Buy once, use forever. No subscriptions.</p>
+              <p className="text-muted-foreground text-center mb-8 md:text-xl">Pay What You Want (PWYW). No subscriptions.</p>
               <div className="max-w-md mx-auto">
                 <Card className="flex flex-col h-full">
                   <CardHeader className="p-6 pb-2">
