@@ -4,8 +4,19 @@ import { redirect } from "next/navigation"
 import { revalidatePath } from 'next/cache'
 import { createStripeCustomer, createTrialCheckoutSession } from '@/utils/stripe/api'
 import { db } from '@/utils/db/db'
-import { usersTable } from '@/utils/db/schema'
+import { usersTable, licenseKeysTable } from '@/utils/db/schema'
 import { eq } from 'drizzle-orm'
+import crypto from 'crypto'
+
+function generateLicenseKey() {
+    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
+    let key = ''
+    for (let i = 0; i < 16; i++) {
+        if (i > 0 && i % 4 === 0) key += '-'
+        key += chars.charAt(Math.floor(Math.random() * chars.length))
+    }
+    return key
+}
 
 
 const PUBLIC_URL = process.env.NEXT_PUBLIC_WEBSITE_URL || "https://www.ruddy.pro"
@@ -52,6 +63,15 @@ export async function signup(currentState: { message: string }, formData: FormDa
         email: formData.get('email') as string,
         password: formData.get('password') as string,
         name: formData.get('name') as string,
+    }
+
+    const rawAmount = formData.get('amount') as string | null
+    const parsedAmount = rawAmount !== null && rawAmount.trim() !== '' ? parseFloat(rawAmount) : 13.99
+    if (isNaN(parsedAmount) || parsedAmount < 0) {
+        return { message: "Please enter a valid amount ($0 or at least $0.50)." }
+    }
+    if (parsedAmount > 0 && parsedAmount < 0.5) {
+        return { message: "For paid checkouts, Stripe requires a minimum of $0.50 (or enter 0 for free)." }
     }
 
     // Block alias trick instantly
@@ -136,15 +156,37 @@ export async function signup(currentState: { message: string }, formData: FormDa
         return { message: "Failed to setup user account" }
     }
 
-    const plan = formData.get('plan') as string;
+    const plan = (formData.get('plan') as string) || 'prod_U7jwhWfAWQuK0z';
     revalidatePath("/", "layout")
+
+    if (parsedAmount === 0) {
+        try {
+            const cleanEmail = signUpData.user.email!.toLowerCase().trim()
+            const licenseKey = generateLicenseKey()
+            await db.insert(licenseKeysTable).values({
+                id: crypto.randomUUID(),
+                key: licenseKey,
+                email: cleanEmail,
+                plan: 'Diver',
+                isUsed: false,
+            })
+            await db.update(usersTable)
+                .set({ plan: 'Diver' })
+                .where(eq(usersTable.email, signUpData.user.email!))
+        } catch (err) {
+            console.error("Failed to generate free license key:", err)
+            return { message: "Failed to generate license key" }
+        }
+        redirect('/subscribe/success')
+    }
     
     let checkoutUrl: string | null = null;
     let stripeError: string = "";
+    const amountCents = Math.round(parsedAmount * 100);
 
     if (plan) {
         try {
-            checkoutUrl = await createTrialCheckoutSession(data.email, plan);
+            checkoutUrl = await createTrialCheckoutSession(data.email, plan, amountCents);
         } catch (e: any) {
             console.error("Failed to create checkout session:", e);
             stripeError = e.message || "Unknown Stripe SDK Error";
