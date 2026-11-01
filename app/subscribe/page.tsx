@@ -11,6 +11,10 @@ export default async function Subscribe({ searchParams }: { searchParams: { plan
 
     const planId = searchParams.plan || "prod_U7jwhWfAWQuK0z"
 
+    if (!user) {
+        redirect(`/signup?plan=${encodeURIComponent(planId)}`)
+    }
+
     let checkoutUrl: string | null = null
     let errorMessage: string | null = null
 
