@@ -62,9 +62,9 @@ export default function Signup({ searchParams }: { searchParams: { plan?: string
                         <div className="absolute inset-0 pointer-events-none ring-1 ring-inset ring-white/10 rounded-2xl" />
                     </div>
 
-                    <div className="max-w-md text-center mt-8 pt-2 space-y-1.5 px-2">
+                    <div className="max-w-md text-center mt-16 md:mt-24 space-y-1 px-2">
                         <p className="text-[11px] sm:text-xs text-muted-foreground/80 leading-snug">
-                            Please consider contributing any amount—or buying us a coffee—to help keep Ruddy independent and accessible to everyone.
+                            Please consider contributing any amount or buying us a coffee. Help keep Ruddy accessible to everyone.
                         </p>
                         <div className="scale-75 origin-center">
                             <BuyMeACoffee />
