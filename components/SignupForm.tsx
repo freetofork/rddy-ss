@@ -60,8 +60,9 @@ export default function SignupForm({ plan }: { plan?: string }) {
                     name="amount"
                     required
                 />
-                <p className="text-[11px] text-muted-foreground">
+                <p className="text-[11px] text-muted-foreground leading-snug">
                     Suggested $13.99 — enter <strong>0</strong> to get your license key for free.
+                    <span className="block mt-0.5">Help keep Ruddy accessible to everyone.</span>
                 </p>
             </div>
             <Button className="w-full mt-4" type="submit" aria-disabled={pending}>
