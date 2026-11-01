@@ -9,18 +9,10 @@ export default async function Subscribe({ searchParams }: { searchParams: { plan
         data: { user },
     } = await supabase.auth.getUser()
 
-    if (!user) {
-        redirect('/login')
-    }
+    const planId = searchParams.plan || "prod_U7jwhWfAWQuK0z"
 
-    if (!searchParams.plan) {
-        // Fallback: If no plan was specified (e.g. they typed /subscribe navigating manually),
-        // we bounce them back to the home page to select one from the nice Pricing Cards!
-        redirect('/#pricing')
-    }
-
-    // Securely invoke Stripe directly with a programmatic 7-day trial
-    const checkoutUrl = await createTrialCheckoutSession(user.email!, searchParams.plan)
+    // Securely invoke Stripe directly
+    const checkoutUrl = await createTrialCheckoutSession(user?.email, planId)
     
     // Instantly teleport the user out of the app directly into Stripe Checkout
     if (checkoutUrl) {
