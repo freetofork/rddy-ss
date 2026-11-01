@@ -3,6 +3,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import SignupForm from "@/components/SignupForm"
 import ProviderSigninBlock from "@/components/ProviderSigninBlock"
+import { BuyMeACoffee } from "@/components/BuyMeACoffee"
 
 export const dynamic = 'force-dynamic'
 
@@ -45,9 +46,9 @@ export default function Signup({ searchParams }: { searchParams: { plan?: string
                     </Card>
                 </div>
 
-                {/* Right Side: Featured Video */}
-                <div className="w-full md:w-1/2 lg:w-3/5">
-                    <div className="relative aspect-video rounded-2xl overflow-hidden shadow-2xl border border-border/20 bg-black/5">
+                {/* Right Side: Featured Video & Support */}
+                <div className="w-full md:w-1/2 lg:w-3/5 flex flex-col items-center space-y-6">
+                    <div className="relative w-full aspect-video rounded-2xl overflow-hidden shadow-2xl border border-border/20 bg-black/5">
                         <video
                             autoPlay
                             loop
@@ -59,6 +60,13 @@ export default function Signup({ searchParams }: { searchParams: { plan?: string
                         </video>
                         {/* Professional sheen/overlay */}
                         <div className="absolute inset-0 pointer-events-none ring-1 ring-inset ring-white/10 rounded-2xl" />
+                    </div>
+
+                    <div className="max-w-lg text-center space-y-3 px-2">
+                        <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
+                            Running Ruddy&apos;s backend infrastructure (database, authentication, and distribution) costs around <strong>$25–$120/month</strong> depending on traffic and usage. Please consider contributing any amount—or buying us a coffee—to help keep Ruddy independent and accessible to everyone.
+                        </p>
+                        <BuyMeACoffee />
                     </div>
                 </div>
 
