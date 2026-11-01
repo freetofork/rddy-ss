@@ -13,9 +13,9 @@ export const metadata: Metadata = {
     title: "Ruddy - Member Area",
     description: "Manage your Ruddy license key and workspace access.",
     icons: {
-        icon: "/ruddy-icon.png",
-        shortcut: "/ruddy-icon.png",
-        apple: "/ruddy-icon.png",
+        icon: "/ruddy-icon.png?v=2",
+        shortcut: "/ruddy-icon.png?v=2",
+        apple: "/ruddy-icon.png?v=2",
     },
 };
 
