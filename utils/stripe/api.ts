@@ -10,7 +10,11 @@ const PUBLIC_URL = process.env.NEXT_PUBLIC_WEBSITE_URL || "https://www.ruddy.pro
 export async function getStripePlan(email: string) {
     try {
         const user = await db.select().from(usersTable).where(eq(usersTable.email, email))
-        if (!user || user.length === 0 || !user[0].plan) return "Free Plan";
+        if (!user || user.length === 0 || !user[0].plan || user[0].plan === 'none') return "Free Plan";
+
+        if (!user[0].plan.startsWith('sub_')) {
+            return user[0].plan;
+        }
         
         const subscription = await stripe.subscriptions.retrieve(user[0].plan);
         const productId = subscription.items.data[0].plan.product as string
@@ -91,7 +95,7 @@ export async function createTrialCheckoutSession(email: string | undefined, prod
         ...(customerId ? { customer: customerId } : email ? { customer_email: email } : {}),
         mode: isSubscription ? 'subscription' : 'payment',
         line_items: [{ price: price.id, quantity: 1 }],
-        success_url: `${PUBLIC_URL}/subscribe/success`,
+        success_url: `${PUBLIC_URL}/subscribe/success?session_id={CHECKOUT_SESSION_ID}`,
         cancel_url: customerId ? `${PUBLIC_URL}/dashboard?canceled=true` : `${PUBLIC_URL}/#pricing`,
         ...(!isCustomAmount ? { allow_promotion_codes: true } : {}),
         ...(isSubscription ? { payment_method_collection: 'if_required' } : {})
