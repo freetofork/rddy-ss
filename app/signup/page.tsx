@@ -47,7 +47,7 @@ export default function Signup({ searchParams }: { searchParams: { plan?: string
                 </div>
 
                 {/* Right Side: Featured Video & Support */}
-                <div className="w-full md:w-1/2 lg:w-3/5 flex flex-col items-center space-y-6">
+                <div className="w-full md:w-1/2 lg:w-3/5 flex flex-col items-center">
                     <div className="relative w-full aspect-video rounded-2xl overflow-hidden shadow-2xl border border-border/20 bg-black/5">
                         <video
                             autoPlay
@@ -62,11 +62,16 @@ export default function Signup({ searchParams }: { searchParams: { plan?: string
                         <div className="absolute inset-0 pointer-events-none ring-1 ring-inset ring-white/10 rounded-2xl" />
                     </div>
 
-                    <div className="max-w-lg text-center space-y-3 px-2">
-                        <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
-                            Running Ruddy&apos;s backend infrastructure (database, authentication, and distribution) costs around <strong>$25–$120/month</strong> depending on traffic and usage. Please consider contributing any amount—or buying us a coffee—to help keep Ruddy independent and accessible to everyone.
+                    <div className="max-w-md text-center mt-8 pt-2 space-y-1.5 px-2">
+                        <p className="text-[11px] sm:text-xs text-muted-foreground/80 leading-snug">
+                            Please consider contributing any amount—or buying us a coffee—to help keep Ruddy independent and accessible to everyone.
                         </p>
-                        <BuyMeACoffee />
+                        <div className="scale-75 origin-center">
+                            <BuyMeACoffee />
+                        </div>
+                        <p className="text-[10px] sm:text-[11px] text-muted-foreground/60 leading-snug">
+                            Ruddy&apos;s backend infrastructure costs around $25–$120/month depending on traffic and usage.
+                        </p>
                     </div>
                 </div>
 
