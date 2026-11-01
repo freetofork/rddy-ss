@@ -10,8 +10,8 @@ import { eq } from "drizzle-orm";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-    title: "SAAS Starter Kit",
-    description: "SAAS Starter Kit with Stripe, Supabase, Postgres",
+    title: "Ruddy - Member Area",
+    description: "Manage your Ruddy license key and workspace access.",
 };
 
 export default async function DashboardLayout({
