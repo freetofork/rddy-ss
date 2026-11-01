@@ -9,7 +9,7 @@ export function DownloadModal() {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleDownload = () => {
-    window.location.href = "https://pub-66f67f4a3e74412c91eeedaff15ae554.r2.dev/Ruddy_1.0.0-rc.3_aarch64.dmg";
+    window.location.href = "https://pub-66f67f4a3e74412c91eeedaff15ae554.r2.dev/Ruddy_1.0.0-rc.4_aarch64.dmg";
     // Close modal after a short delay
     setTimeout(() => setIsOpen(false), 2000);
   };
@@ -39,6 +39,9 @@ export function DownloadModal() {
               <h2 className="text-2xl font-black text-[#4F2C1E] tracking-tight">
                 Almost there!
               </h2>
+              <p className="text-xs font-mono font-semibold text-[#4F2C1E]/60 -mt-2">
+                Ruddy_1.0.0-rc.4_aarch64.dmg · DuckDB 2.0
+              </p>
 
               <div className="bg-amber-50 border border-amber-200 p-5 rounded-2xl w-full text-left space-y-3">
                 <div className="flex items-center gap-2 text-amber-900 font-bold">
