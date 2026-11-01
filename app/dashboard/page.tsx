@@ -58,7 +58,7 @@ export default async function Dashboard() {
                     </CardContent>
                 </Card>
 
-                <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+                <div className="grid gap-6 md:grid-cols-2">
                     {/* Current Plan Card */}
                     <Card className="border-border/50 shadow-sm">
                         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
@@ -71,34 +71,8 @@ export default async function Dashboard() {
                         </CardContent>
                     </Card>
 
-                    {/* Manage Subscription Card */}
-                    <Card className="md:col-span-2 lg:col-span-1 border-border/50 shadow-sm">
-                        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                            <CardTitle className="text-sm font-bold uppercase tracking-wider text-muted-foreground">Subscription</CardTitle>
-                            <CreditCard className="h-4 w-4 text-primary" />
-                        </CardHeader>
-                        <CardContent className="space-y-4">
-                            <p className="text-sm text-foreground/80 leading-relaxed">
-                                Need to update your billing details or cancel your plan? You can manage your subscription directly in the Stripe portal.
-                            </p>
-                            <Button asChild className="w-full" variant="outline">
-                                <a
-                                    href="https://billing.stripe.com/p/login/test_9B6aEXaU18QUftyaihbbG00"
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="flex items-center justify-center gap-2"
-                                >
-                                    Manage in Stripe <ExternalLink className="h-3 w-3" />
-                                </a>
-                            </Button>
-                            <p className="text-[10px] text-muted-foreground/60 text-center mt-2 leading-snug">
-                                Please if you also want to delete your account, click on the Profile icon on the top right corner or in the Ruddy app.
-                            </p>
-                        </CardContent>
-                    </Card>
-
                     {/* How-to's Card */}
-                    <Card className="lg:col-span-1 border-border/50 shadow-sm">
+                    <Card className="border-border/50 shadow-sm">
                         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                             <CardTitle className="text-sm font-bold uppercase tracking-wider text-muted-foreground">Learning Center</CardTitle>
                             <Youtube className="h-4 w-4 text-red-500" />
