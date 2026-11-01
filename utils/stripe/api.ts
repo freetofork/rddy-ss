@@ -59,16 +59,28 @@ export async function generateStripeBillingPortalLink(email: string) {
 export async function createTrialCheckoutSession(email: string | undefined, productId: string) {
     let customerId: string | undefined;
     if (email) {
-        const user = await db.select().from(usersTable).where(eq(usersTable.email, email))
-        if (user.length > 0 && user[0].stripe_id) {
-            customerId = user[0].stripe_id;
+        try {
+            const user = await db.select().from(usersTable).where(eq(usersTable.email, email))
+            if (user.length > 0 && user[0].stripe_id) {
+                customerId = user[0].stripe_id;
+            }
+        } catch (dbErr) {
+            console.warn("[createTrialCheckoutSession] Failed to fetch user from DB:", dbErr);
         }
     }
     
-    // 1. Get the price for the specific plan
-    const prices = await stripe.prices.list({ product: productId, active: true })
-    if (prices.data.length === 0) throw new Error("No active price found for this product")
-    const price = prices.data[0]
+    // 1. Get the product and its default/active price
+    const product = await stripe.products.retrieve(productId, { expand: ['default_price'] })
+    let price = product.default_price && typeof product.default_price === 'object'
+        ? (product.default_price as Stripe.Price)
+        : undefined;
+
+    if (!price || !price.active) {
+        const prices = await stripe.prices.list({ product: productId, active: true })
+        if (prices.data.length === 0) throw new Error("No active price found for this product")
+        // Prefer a custom_unit_amount (PWYW) price if multiple active prices exist
+        price = prices.data.find(p => p.custom_unit_amount !== null) || prices.data[0]
+    }
 
     // 2. Identify if it's a subscription (Bubbler, Splash) or a one-time payment (Diver)
     const isSubscription = price.type === 'recurring'
@@ -92,6 +104,20 @@ export async function createTrialCheckoutSession(email: string | undefined, prod
         }
     }
 
-    const session = await stripe.checkout.sessions.create(sessionConfig)
-    return session.url
+    try {
+        const session = await stripe.checkout.sessions.create(sessionConfig)
+        return session.url
+    } catch (err: any) {
+        // Fallback: if Stripe rejects the stored customerId (e.g. customer deleted or test/live mismatch), retry with customer_email or anonymous
+        if (customerId) {
+            console.warn("[createTrialCheckoutSession] Retrying checkout without customerId due to error:", err.message);
+            delete sessionConfig.customer;
+            if (email) {
+                sessionConfig.customer_email = email;
+            }
+            const session = await stripe.checkout.sessions.create(sessionConfig)
+            return session.url
+        }
+        throw err;
+    }
 }
