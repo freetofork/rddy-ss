@@ -11,7 +11,9 @@ export const metadata: Metadata = {
   title: "Ruddy",
   description: "Query local and cloud data natively with DuckDB.",
   icons: {
-    icon: "/ruddy-icon.png",
+    icon: "/ruddy-icon.png?v=2",
+    shortcut: "/ruddy-icon.png?v=2",
+    apple: "/ruddy-icon.png?v=2",
   },
 };
 
