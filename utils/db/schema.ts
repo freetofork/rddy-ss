@@ -17,6 +17,7 @@ export const licenseKeysTable = pgTable('license_keys', {
     email: text('email').notNull(),
     isUsed: boolean('is_used').default(false),
     plan: text('plan'),
+    activeDeviceId: uuid('active_device_id'),
     activatedAt: timestamp('activated_at', { withTimezone: true }),
     createdAt: timestamp('created_at', { withTimezone: true }).defaultNow(),
 });
