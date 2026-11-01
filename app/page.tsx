@@ -220,7 +220,7 @@ export default async function LandingPage() {
                     </ul>
                   </CardContent>
                   <CardFooter className="p-6 pt-4 mt-auto">
-                    <Link className="w-full" href="/subscribe?plan=prod_U7jwhWfAWQuK0z">
+                    <Link className="w-full" href="/signup?plan=prod_U7jwhWfAWQuK0z">
                       <Button className="w-full text-sm h-10">Get Ruddy</Button>
                     </Link>
                   </CardFooter>
