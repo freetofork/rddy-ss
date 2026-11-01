@@ -56,8 +56,14 @@ export async function generateStripeBillingPortalLink(email: string) {
     return portalSession.url
 }
 
-export async function createTrialCheckoutSession(email: string, productId: string) {
-    const user = await db.select().from(usersTable).where(eq(usersTable.email, email))
+export async function createTrialCheckoutSession(email: string | undefined, productId: string) {
+    let customerId: string | undefined;
+    if (email) {
+        const user = await db.select().from(usersTable).where(eq(usersTable.email, email))
+        if (user.length > 0 && user[0].stripe_id) {
+            customerId = user[0].stripe_id;
+        }
+    }
     
     // 1. Get the price for the specific plan
     const prices = await stripe.prices.list({ product: productId, active: true })
@@ -69,11 +75,11 @@ export async function createTrialCheckoutSession(email: string, productId: strin
 
     // 3. Configure the checkout session natively
     const sessionConfig: Stripe.Checkout.SessionCreateParams = {
-        customer: user[0].stripe_id,
+        ...(customerId ? { customer: customerId } : email ? { customer_email: email } : {}),
         mode: isSubscription ? 'subscription' : 'payment',
         line_items: [{ price: price.id, quantity: 1 }],
         success_url: `${PUBLIC_URL}/subscribe/success`,
-        cancel_url: `${PUBLIC_URL}/dashboard?canceled=true`,
+        cancel_url: customerId ? `${PUBLIC_URL}/dashboard?canceled=true` : `${PUBLIC_URL}/#pricing`,
         allow_promotion_codes: true,
         ...(isSubscription ? { payment_method_collection: 'if_required' } : {})
     }
