@@ -60,7 +60,7 @@ export async function generateStripeBillingPortalLink(email: string) {
     return portalSession.url
 }
 
-export async function createTrialCheckoutSession(email: string | undefined, productId: string) {
+export async function createTrialCheckoutSession(email: string | undefined, productId: string, customAmountCents?: number) {
     let customerId: string | undefined;
     if (email) {
         try {
@@ -88,13 +88,25 @@ export async function createTrialCheckoutSession(email: string | undefined, prod
 
     // 2. Identify if it's a subscription (Bubbler, Splash) or a one-time payment (Diver)
     const isSubscription = price.type === 'recurring'
-    const isCustomAmount = Boolean(price.custom_unit_amount)
+    const isCustomAmount = Boolean(price.custom_unit_amount) && customAmountCents === undefined
+
+    const lineItem: Stripe.Checkout.SessionCreateParams.LineItem =
+        customAmountCents !== undefined && !isSubscription
+            ? {
+                price_data: {
+                    currency: price.currency || 'usd',
+                    product: product.id,
+                    unit_amount: customAmountCents,
+                },
+                quantity: 1,
+            }
+            : { price: price.id, quantity: 1 };
 
     // 3. Configure the checkout session natively
     const sessionConfig: Stripe.Checkout.SessionCreateParams = {
         ...(customerId ? { customer: customerId } : email ? { customer_email: email } : {}),
         mode: isSubscription ? 'subscription' : 'payment',
-        line_items: [{ price: price.id, quantity: 1 }],
+        line_items: [lineItem],
         success_url: `${PUBLIC_URL}/subscribe/success?session_id={CHECKOUT_SESSION_ID}`,
         cancel_url: customerId ? `${PUBLIC_URL}/dashboard?canceled=true` : `${PUBLIC_URL}/#pricing`,
         ...(!isCustomAmount ? { allow_promotion_codes: true } : {}),
