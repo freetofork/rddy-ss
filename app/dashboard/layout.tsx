@@ -4,7 +4,7 @@ import { Inter } from "next/font/google";
 import { createClient } from '@/utils/supabase/server'
 import { redirect } from "next/navigation"
 import { db } from '@/utils/db/db'
-import { usersTable } from '@/utils/db/schema'
+import { usersTable, licenseKeysTable } from '@/utils/db/schema'
 import { eq } from "drizzle-orm";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -26,10 +26,19 @@ export default async function DashboardLayout({
         data: { user },
     } = await supabase.auth.getUser()
 
-    // check user plan in db
-    const checkUserInDB = await db.select().from(usersTable).where(eq(usersTable.email, user!.email!))
-    if (checkUserInDB[0].plan === "none") {
-        console.log("User has no plan selected")
+    if (!user?.email) {
+        return redirect('/login')
+    }
+
+    // check user plan or license key in db
+    const checkUserInDB = await db.select().from(usersTable).where(eq(usersTable.email, user.email))
+    const checkLicenseInDB = await db.select().from(licenseKeysTable).where(eq(licenseKeysTable.email, user.email.toLowerCase().trim()))
+
+    const hasPlan = checkUserInDB.length > 0 && checkUserInDB[0].plan && checkUserInDB[0].plan !== "none"
+    const hasLicense = checkLicenseInDB.length > 0
+
+    if (!hasPlan && !hasLicense) {
+        console.log("User has no plan selected or license key")
         return redirect('/subscribe')
     }
 
