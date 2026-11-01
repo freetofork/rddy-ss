@@ -12,6 +12,11 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
     title: "Ruddy - Member Area",
     description: "Manage your Ruddy license key and workspace access.",
+    icons: {
+        icon: "/ruddy-icon.png",
+        shortcut: "/ruddy-icon.png",
+        apple: "/ruddy-icon.png",
+    },
 };
 
 export default async function DashboardLayout({
@@ -44,9 +49,9 @@ export default async function DashboardLayout({
 
 
     return (
-        <html lang="en">
+        <>
             <DashboardHeader />
             {children}
-        </html>
+        </>
     );
 }
