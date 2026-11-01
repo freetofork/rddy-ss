@@ -68,9 +68,6 @@ export default function Signup({ searchParams }: { searchParams: { plan?: string
                             <p className="text-[11px] text-muted-foreground/80 leading-snug pt-1">
                                 Please consider contributing any amount or buying us a coffee.
                             </p>
-                            <p className="text-[10px] text-muted-foreground/60 leading-snug">
-                                Ruddy&apos;s backend infrastructure costs around $25–$120/month depending on traffic and usage.
-                            </p>
                         </div>
                     </div>
 
