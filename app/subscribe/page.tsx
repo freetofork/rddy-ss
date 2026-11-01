@@ -11,8 +11,16 @@ export default async function Subscribe({ searchParams }: { searchParams: { plan
 
     const planId = searchParams.plan || "prod_U7jwhWfAWQuK0z"
 
-    // Securely invoke Stripe directly
-    const checkoutUrl = await createTrialCheckoutSession(user?.email, planId)
+    let checkoutUrl: string | null = null
+    let errorMessage: string | null = null
+
+    try {
+        // Securely invoke Stripe directly
+        checkoutUrl = await createTrialCheckoutSession(user?.email, planId)
+    } catch (err: any) {
+        console.error("[Subscribe] Failed to create Stripe Checkout session:", err)
+        errorMessage = err?.message || "Failed to initialize Stripe Checkout."
+    }
     
     // Instantly teleport the user out of the app directly into Stripe Checkout
     if (checkoutUrl) {
@@ -27,10 +35,17 @@ export default async function Subscribe({ searchParams }: { searchParams: { plan
                     <span className="font-display font-bold text-lg tracking-tighter hidden sm:inline-block">Ruddy</span>
                 </div>
             </header>
-            <div className="w-full h-screen flex-1 bg-muted flex flex-col items-center justify-center">
-                <div className="text-center py-6 md:py-10 lg:py-12 animate-pulse">
-                    <h1 className="font-bold text-2xl md:text-4xl text-foreground/80 tracking-tighter">Preparing your secure checkout...</h1>
-                </div>
+            <div className="w-full h-screen flex-1 bg-muted flex flex-col items-center justify-center p-4">
+                {errorMessage ? (
+                    <div className="text-center max-w-md bg-background p-6 rounded-xl border border-border shadow-sm space-y-3">
+                        <h1 className="font-bold text-xl text-destructive">Checkout Error</h1>
+                        <p className="text-sm text-muted-foreground">{errorMessage}</p>
+                    </div>
+                ) : (
+                    <div className="text-center py-6 md:py-10 lg:py-12 animate-pulse">
+                        <h1 className="font-bold text-2xl md:text-4xl text-foreground/80 tracking-tighter">Preparing your secure checkout...</h1>
+                    </div>
+                )}
             </div>
         </div>
     )
