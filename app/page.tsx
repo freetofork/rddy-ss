@@ -6,7 +6,6 @@ import { Check, Coins, UserCheck, Database, Activity, Map, CloudDownload, BarCha
 import { ImageSlider } from "@/components/image-slider"
 import { DownloadModal } from "@/components/DownloadModal"
 import { ScrollReveal } from "@/components/scroll-reveal"
-import { BuyMeACoffee } from "@/components/BuyMeACoffee"
 
 const DIVER_FEATURES = [
   "Native DuckDB engine (zero WASM overhead)",
@@ -253,11 +252,6 @@ export default async function LandingPage() {
                 </div>
               </div>
             </div>
-          </section>
-        </ScrollReveal>
-        <ScrollReveal>
-          <section className="w-full py-8 md:py-12 flex justify-center">
-            <BuyMeACoffee />
           </section>
         </ScrollReveal>
       </main>
