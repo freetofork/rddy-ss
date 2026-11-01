@@ -53,8 +53,17 @@ export default async function LandingPage() {
                   Local and cloud data natively with DuckDB and AI
                 </p>
               </div>
-              <div className="flex items-center gap-3 mt-4">
+              <div className="flex flex-col items-start gap-2.5 mt-4">
                 <DownloadModal />
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#FFF5E6] border border-[#1A96E8]/25 shadow-sm">
+                  <span className="relative flex h-2 w-2">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#1A96E8] opacity-75"></span>
+                    <span className="relative inline-flex rounded-full h-2 w-2 bg-[#1A96E8]"></span>
+                  </span>
+                  <span className="text-xs font-semibold text-[#4F2C1E] tracking-tight">
+                    Now running <span className="font-bold text-[#1A96E8]">DuckDB 2.0</span>
+                  </span>
+                </div>
               </div>
             </div>
             <div className="w-full md:w-2/3">
@@ -246,9 +255,9 @@ export default async function LandingPage() {
                   <p className="text-[#4F2C1E]/80 text-sm md:text-lg mt-2">
                     Dive in while the water&apos;s fine
                   </p>
-                  <Link className="btn mt-4" href="#">
-                    <Button>Download for macOS</Button>
-                  </Link>
+                  <div className="mt-4">
+                    <DownloadModal />
+                  </div>
                 </div>
               </div>
             </div>
