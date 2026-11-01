@@ -67,18 +67,31 @@ export async function POST(req: Request) {
                     const product = lineItem?.price?.product as Stripe.Product | undefined;
                     const planName = product?.name || lineItem?.description || 'Standard';
 
-                    const licenseKey = generateLicenseKey();
-                    console.log(`[Stripe Webhook] Plan: ${planName} | License: ${licenseKey}`);
+                    const existingKeys = await db.select().from(licenseKeysTable).where(eq(licenseKeysTable.email, email));
+                    let licenseKey: string;
 
-                    await db.insert(licenseKeysTable).values({
-                        id: crypto.randomUUID(),
-                        key: licenseKey,
-                        email: email,
-                        plan: planName,
-                        isUsed: false
-                    });
+                    if (existingKeys.length > 0) {
+                        licenseKey = existingKeys[0].key;
+                        console.log(`[Stripe Webhook] Existing license key found for ${email}: ${licenseKey}`);
+                    } else {
+                        licenseKey = generateLicenseKey();
+                        console.log(`[Stripe Webhook] Plan: ${planName} | License: ${licenseKey}`);
 
-                    console.log(`[Stripe Webhook] SUCCESS: License key saved for ${email}`);
+                        await db.insert(licenseKeysTable).values({
+                            id: crypto.randomUUID(),
+                            key: licenseKey,
+                            email: email,
+                            plan: planName,
+                            isUsed: false
+                        });
+                    }
+
+                    // Update user's plan in users_table so dashboard access works immediately for one-time payments as well
+                    await db.update(usersTable)
+                        .set({ plan: planName })
+                        .where(eq(usersTable.email, email));
+
+                    console.log(`[Stripe Webhook] SUCCESS: License key ready for ${email}`);
 
                     // --- SEND EMAIL ---
                     try {
