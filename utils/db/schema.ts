@@ -21,3 +21,18 @@ export const licenseKeysTable = pgTable('license_keys', {
     activatedAt: timestamp('activated_at', { withTimezone: true }),
     createdAt: timestamp('created_at', { withTimezone: true }).defaultNow(),
 });
+
+export const supportTicketsTable = pgTable('support_tickets', {
+    id: uuid('id').primaryKey().defaultRandom(),
+    ticketNumber: text('ticket_number').notNull().unique(),
+    email: text('email').notNull(),
+    category: text('category').notNull(), // 'Bug Report' | 'Feature Request'
+    message: text('message').notNull(),
+    adminResponse: text('admin_response'),
+    status: text('status').notNull().default('open'), // 'open' | 'answered' | 'closed'
+    isRead: boolean('is_read').notNull().default(false),
+    respondedAt: timestamp('responded_at', { withTimezone: true }),
+    createdAt: timestamp('created_at', { withTimezone: true }).defaultNow(),
+});
+
+export type SupportTicket = typeof supportTicketsTable.$inferSelect;
