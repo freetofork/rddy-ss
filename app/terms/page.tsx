@@ -19,7 +19,7 @@ export default function TermsOfService() {
 
       <main className="flex-1 max-w-4xl mx-auto px-6 py-16 text-[#4F2C1E] font-sans">
         <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight mb-4">Terms of Service</h1>
-        <p className="text-muted-foreground mb-12 text-sm">Last Updated: March 2026</p>
+        <p className="text-muted-foreground mb-12 text-sm">Last Updated: Oct 2026</p>
 
         <div className="space-y-10 leading-relaxed">
           <section>
