@@ -63,7 +63,7 @@ export default function TermsOfService() {
 
             <h3 className="text-xl font-bold mb-2">3.1 Billing</h3>
             <p className="mb-6">
-              Paid contributions (for custom amounts of $0.50 USD or more, as required by payment processor minimums) are billed securely as a <strong>one-time, non-recurring transaction</strong> via <strong>Stripe</strong>. Free ($0.00) signups bypass payment checkout entirely and issue a license key directly to your account without requiring credit card details.
+              There is <strong>no direct subscription or recurring billing at all</strong>—only the one-time Pay What You Want (PWYW) model described in Section 3 above. If you choose a paid amount during signup, it is processed securely via <strong>Stripe</strong> as a single transaction, and you will <strong>never be billed by Stripe again</strong> after your chosen amount. Users who wish to provide ongoing support may optionally donate on a one-time or monthly basis through <strong>Buy Me a Coffee</strong>, which is entirely voluntary and separate from your Ruddy license.
             </p>
 
             <h3 className="text-xl font-bold mb-2">3.2 Cancellation</h3>
