@@ -46,26 +46,40 @@ export default function TermsOfService() {
 
           <section>
             <h2 className="text-2xl font-bold mb-4">3. Pricing and Subscriptions</h2>
-            <p className="mb-4">Ruddy offers three plans:</p>
+            <p className="mb-4">
+              Ruddy currently offers the <strong>Diver</strong> plan under a <strong>Pay What You Want (PWYW)</strong> licensing model, providing full access to the Software with no recurring subscription fees:
+            </p>
             <ul className="list-disc pl-6 space-y-2 text-[#4F2C1E]/90 mb-6">
-              <li><strong>The Bubbler (Monthly)</strong> – $1.25/mo. Auto‑renews each calendar month. Includes a 7-day free trial.</li>
-              <li><strong>Splash (6 Months)</strong> – $7.50/6 mo. Auto-renews every 6 months. Includes a 7-day free trial.</li>
-              <li><strong>Diver (Pay-Once)</strong> – $15.00 one-time payment for lifetime access. No auto-renewal.</li>
+              <li>
+                <strong>Suggested Price ($13.99 USD)</strong> – We suggest a one-time payment of <strong>$13.99 USD</strong>, but the amount is completely open to any quantity desired by the user.
+              </li>
+              <li>
+                <strong>Open &amp; Accessible Contributions (Including $0.00)</strong> – Users may choose to pay the suggested amount, a higher amount to support ongoing development and infrastructure costs, a lower custom amount, or <strong>$0.00 (free)</strong> to receive a valid license key immediately.
+              </li>
+              <li>
+                <strong>Voluntary Support</strong> – Users may also optionally support Ruddy&apos;s monthly backend and infrastructure costs at any time via voluntary contributions (such as Buy Me a Coffee) on the website.
+              </li>
             </ul>
 
             <h3 className="text-xl font-bold mb-2">3.1 Billing</h3>
             <p className="mb-6">
-              Subscriptions are billed securely via <strong>Stripe</strong>. Your billing information must remain accurate; otherwise the license may be suspended.
+              Paid contributions (for custom amounts of $0.50 USD or more, as required by payment processor minimums) are billed securely as a <strong>one-time, non-recurring transaction</strong> via <strong>Stripe</strong>. Free ($0.00) signups bypass payment checkout entirely and issue a license key directly to your account without requiring credit card details.
             </p>
 
             <h3 className="text-xl font-bold mb-2">3.2 Cancellation</h3>
             <p className="mb-6">
-              Cancellations are performed through the <strong>Stripe billing portal</strong> and become effective <strong>at the end of the current billing period</strong>. No prorated refunds are issued.
+              Because the Pay What You Want model consists solely of one-time transactions with <strong>no recurring billing cycles or auto-renewing subscriptions</strong>, there are no recurring charges to cancel. You may stop using the Software or delete your account at any time from the Member Area dashboard.
             </p>
 
             <h3 className="text-xl font-bold mb-2">3.3 Expirations and Non-Recurring Plans</h3>
             <p className="mb-4">
-              Subscription trials (The Bubbler, Splash) will automatically upgrade to paid subscriptions after 7 days unless cancelled. The Pay-Once plan (Diver) does not expire and will never automatically charge you again.
+              License keys issued under the Diver (Pay What You Want) plan do not automatically rebill you and are valid for <strong>one (1) active macOS device</strong> per license key tied to your registered account.
+            </p>
+            <p className="mb-4">
+              <strong>Limited-Time Offer &amp; Right to Change Pricing Model:</strong> Please note that the Pay What You Want (PWYW) pricing model—including the ability to obtain a license key for $0.00 or custom user-selected amounts—is offered for a <strong>limited period of time</strong>. Ruddy expressly reserves the legal right, at its sole discretion, to modify, restructure, or replace its pricing, licensing, or subscription model at any time in the future.
+            </p>
+            <p className="mb-4">
+              <strong>One (1) Month Prior Notice:</strong> In the event that we change our pricing or licensing model, we will provide at least <strong>one (1) month (30 calendar days) prior notice</strong> before the change takes effect. Official notice will be published on the Ruddy website (<a href="https://www.ruddy.pro" className="text-[#1A96E8] underline">ruddy.pro</a>) and sent via email to all currently registered users at the email address associated with their account.
             </p>
           </section>
 
@@ -175,7 +189,7 @@ export default function TermsOfService() {
               The Ruddy Software, its name, visual identity, branding, icons, and proprietary compiled assets are the intellectual property of the Ruddy developers.
             </p>
             <ul className="list-disc pl-6 space-y-2 text-[#4F2C1E]/90">
-              <li>You may install and use Ruddy on any macOS device you own.</li>
+              <li>You may install and activate Ruddy on one (1) active macOS device per license key.</li>
               <li>You may not explicitly decompile, resell, reverse-engineer, create derivative works, or distribute the application without documented legal authorization.</li>
               <li>You may not share or distribute your license key. Any detection of key sharing, resale, or duplication will result in immediate and unilateral revocation of your license without a refund.</li>
               <li>The license terminates automatically upon breach of any term.</li>
@@ -192,8 +206,16 @@ export default function TermsOfService() {
           <section>
             <h2 className="text-2xl font-bold mb-4">10. Contact and Support</h2>
             <p className="mb-4">
-              Please contact us via our documented community channel on Discord available on the Ruddy website or in the app.
+              Registered users can submit <strong>Bug Reports</strong> and <strong>Feature Requests</strong> directly through the <strong>Help &amp; Support</strong> ticketing system inside the Member Area dashboard, where each submission is assigned a unique service tracking number and responses are delivered via the dashboard notification bell:
             </p>
+            <ul className="list-disc pl-6 space-y-2 text-[#4F2C1E]/90 mb-4">
+              <li>
+                <strong>Contributing &amp; Donating Users (Unlimited Direct Support):</strong> Users who have made a financial contribution or donation (either during Pay What You Want registration or via our voluntary support channels) receive <strong>unlimited direct response availability</strong> from our technical staff through the Member Area support system.
+              </li>
+              <li>
+                <strong>Free-Tier ($0.00) Users:</strong> Users who registered with a $0.00 contribution may still submit Bug Reports and Feature Requests through the Member Area ticketing system for internal review, prioritization, and product improvement; however, <strong>direct individual responses are not guaranteed</strong>. Free-tier users are encouraged to use our community and social channels (such as Discord and LinkedIn) for questions and community assistance.
+              </li>
+            </ul>
           </section>
         </div>
 
