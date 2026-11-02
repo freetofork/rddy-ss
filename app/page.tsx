@@ -267,15 +267,15 @@ export default async function LandingPage() {
       <footer className="flex flex-col gap-2 sm:flex-row py-6 w-full shrink-0 items-center px-4 md:px-6 border-t">
         <p className="text-xs text-muted-foreground">© 2026 Ruddy. All rights reserved.</p>
         <nav className="sm:ml-auto flex items-center gap-4 sm:gap-6 mt-4 sm:mt-0">
-          <Link href="/security" className="flex items-center gap-2 hover:opacity-80 transition-opacity" title="View Security Audits">
+          <Link href="/security" prefetch={false} className="flex items-center gap-2 hover:opacity-80 transition-opacity" title="View Security Audits">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src="https://img.shields.io/badge/vulnerabilities-0-success?style=flat-square&logo=security" alt="Security Scan: 0 Vulnerabilities" className="h-4 rounded-sm" />
             <span className="text-xs font-bold text-muted-foreground hover:underline underline-offset-4">View Report</span>
           </Link>
-          <Link className="text-xs hover:underline underline-offset-4 text-muted-foreground" href="/terms">
+          <Link className="text-xs hover:underline underline-offset-4 text-muted-foreground" href="/terms" prefetch={false}>
             Terms of Service
           </Link>
-          <Link className="text-xs hover:underline underline-offset-4 text-muted-foreground" href="/privacy">
+          <Link className="text-xs hover:underline underline-offset-4 text-muted-foreground" href="/privacy" prefetch={false}>
             Privacy
           </Link>
         </nav>
