@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, useTransition } from "react";
+import { useState, useTransition, useEffect } from "react";
+import { createPortal } from "react-dom";
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -57,6 +58,11 @@ export default function DashboardSupportClient({
     const [tickets, setTickets] = useState<SerializedSupportTicket[]>(initialTickets);
     const [isSupportModalOpen, setIsSupportModalOpen] = useState(false);
     const [isBellModalOpen, setIsBellModalOpen] = useState(false);
+    const [mounted, setMounted] = useState(false);
+
+    useEffect(() => {
+        setMounted(true);
+    }, []);
 
     // Support Form State
     const [category, setCategory] = useState<"Bug Report" | "Feature Request">("Bug Report");
@@ -204,8 +210,8 @@ export default function DashboardSupportClient({
                 </DropdownMenu>
             </nav>
 
-            {/* Help & Support Submission Modal */}
-            {isSupportModalOpen && (
+            {/* Help & Support Submission Modal (Portaled to document.body to escape header backdrop-filter clipping) */}
+            {mounted && isSupportModalOpen && createPortal(
                 <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm animate-in fade-in duration-150">
                     <div className="bg-background border border-border rounded-2xl shadow-2xl w-full max-w-lg p-6 relative animate-in zoom-in-95 duration-150">
                         <button
@@ -337,11 +343,12 @@ export default function DashboardSupportClient({
                             </form>
                         )}
                     </div>
-                </div>
+                </div>,
+                document.body
             )}
 
             {/* Bell Notifications Pop-up: User Questions & Technical Staff Responses */}
-            {isBellModalOpen && (
+            {mounted && isBellModalOpen && createPortal(
                 <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm animate-in fade-in duration-150">
                     <div className="bg-background border border-border rounded-2xl shadow-2xl w-full max-w-xl max-h-[82vh] flex flex-col relative animate-in zoom-in-95 duration-150">
                         <div className="p-5 border-b border-border flex items-center justify-between">
@@ -492,7 +499,8 @@ export default function DashboardSupportClient({
                             </Button>
                         </div>
                     </div>
-                </div>
+                </div>,
+                document.body
             )}
         </>
     );
