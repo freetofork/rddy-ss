@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button"
 import Image from "next/image"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from "@/components/ui/card"
 import Link from "next/link"
-import { Check, Coins, UserCheck, Database, Activity, Map, CloudDownload, BarChart4, Bot, CheckCircle2, Clock } from "lucide-react"
+import { Check, Coins, UserCheck, Database, Activity, Map, CloudDownload, BarChart4, Bot, CheckCircle2, Sparkles } from "lucide-react"
 import { ImageSlider } from "@/components/image-slider"
 import { DownloadModal } from "@/components/DownloadModal"
 import { ScrollReveal } from "@/components/scroll-reveal"
@@ -110,7 +110,7 @@ export default async function LandingPage() {
                     <Activity className="h-6 w-6 text-primary" />
                   </div>
                   <h3 className="text-xl font-bold">Catalog & ERD</h3>
-                  <p className="text-muted-foreground text-center">Rich and clean information about your schemas. Visual data model and query builder.</p>
+                  <p className="text-muted-foreground text-center">Rich and clean information about your schemas. Visual data model, query builder, plus Auto-Ontology &amp; Semantic View to map live table relationships.</p>
                 </div>
                 <div className="flex flex-col items-center space-y-2 border-muted-foreground/10 p-4 rounded-lg">
                   <div className="p-2 bg-primary/10 rounded-full">
@@ -141,8 +141,8 @@ export default async function LandingPage() {
           <section className="w-full py-10 md:py-20 lg:py-32" id="testimonials">
             <div className="container px-4 md:px-6">
               <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl text-center mb-4">Upcoming</h2>
-              <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4 mt-8">
-                <Card>
+              <div className="flex flex-col lg:flex-row items-stretch justify-center gap-4 lg:gap-0 lg:-space-x-6 mt-10 pb-4">
+                <Card className="lg:w-1/5 bg-background/95 backdrop-blur shadow-lg lg:-rotate-3 hover:rotate-0 hover:-translate-y-3 hover:z-30 transition-all duration-300">
                   <CardContent className="p-6 flex flex-col h-full">
                     <div className="flex items-center justify-between mb-4">
                       <div className="p-2 bg-primary/10 rounded-lg">
@@ -151,11 +151,11 @@ export default async function LandingPage() {
                       <span className="text-xl font-black text-primary/20">#1</span>
                     </div>
                     <h3 className="font-bold text-lg mb-2">Ruddynie Features</h3>
-                    <p className="text-sm text-muted-foreground mb-4">We will integrate more specialized agent skills and additional open-source LLM models.</p>
-                    <div className="flex items-center gap-1.5 text-xs text-amber-600 bg-amber-100/50 w-fit px-2.5 py-1 rounded-md font-medium mt-auto"><Clock className="w-3.5 h-3.5" /> Coming soon</div>
+                    <p className="text-sm text-muted-foreground mb-4">Specialized agent skills and expanded multi-provider &amp; open-source LLM support.</p>
+                    <div className="flex items-center gap-1.5 text-xs text-emerald-600 bg-emerald-100/50 w-fit px-2.5 py-1 rounded-md font-medium mt-auto"><CheckCircle2 className="w-3.5 h-3.5" /> Implemented</div>
                   </CardContent>
                 </Card>
-                <Card>
+                <Card className="lg:w-1/5 bg-background/95 backdrop-blur shadow-lg lg:-rotate-1 hover:rotate-0 hover:-translate-y-3 hover:z-30 transition-all duration-300">
                   <CardContent className="p-6 flex flex-col h-full">
                     <div className="flex items-center justify-between mb-4">
                       <div className="p-2 bg-primary/10 rounded-lg">
@@ -168,7 +168,7 @@ export default async function LandingPage() {
                     <div className="flex items-center gap-1.5 text-xs text-emerald-600 bg-emerald-100/50 w-fit px-2.5 py-1 rounded-md font-medium mt-auto"><CheckCircle2 className="w-3.5 h-3.5" /> Implemented</div>
                   </CardContent>
                 </Card>
-                <Card>
+                <Card className="lg:w-1/5 bg-background/95 backdrop-blur shadow-lg lg:rotate-1 hover:rotate-0 hover:-translate-y-3 hover:z-30 transition-all duration-300">
                   <CardContent className="p-6 flex flex-col h-full">
                     <div className="flex items-center justify-between mb-4">
                       <div className="p-2 bg-primary/10 rounded-lg">
@@ -181,7 +181,7 @@ export default async function LandingPage() {
                     <div className="flex items-center gap-1.5 text-xs text-emerald-600 bg-emerald-100/50 w-fit px-2.5 py-1 rounded-md font-medium mt-auto"><CheckCircle2 className="w-3.5 h-3.5" /> Implemented</div>
                   </CardContent>
                 </Card>
-                <Card>
+                <Card className="lg:w-1/5 bg-background/95 backdrop-blur shadow-lg lg:rotate-2 hover:rotate-0 hover:-translate-y-3 hover:z-30 transition-all duration-300">
                   <CardContent className="p-6 flex flex-col h-full">
                     <div className="flex items-center justify-between mb-4">
                       <div className="p-2 bg-primary/10 rounded-lg">
@@ -192,6 +192,19 @@ export default async function LandingPage() {
                     <h3 className="font-bold text-lg mb-2">Cloud Expansion</h3>
                     <p className="text-sm text-muted-foreground mb-4">More cloud and remote data sources (Buckets, HTTPS etc)</p>
                     <div className="flex items-center gap-1.5 text-xs text-emerald-600 bg-emerald-100/50 w-fit px-2.5 py-1 rounded-md font-medium mt-auto"><CheckCircle2 className="w-3.5 h-3.5" /> Implemented</div>
+                  </CardContent>
+                </Card>
+                <Card className="lg:w-1/5 bg-background border-primary/40 shadow-2xl z-20 lg:-translate-y-1 hover:-translate-y-4 hover:z-30 transition-all duration-300">
+                  <CardContent className="p-6 flex flex-col h-full">
+                    <div className="flex items-center justify-between mb-4">
+                      <div className="p-2 bg-primary/15 rounded-lg">
+                        <Sparkles className="w-6 h-6 text-primary" />
+                      </div>
+                      <span className="text-xl font-black text-primary/30">#5</span>
+                    </div>
+                    <h3 className="font-bold text-lg mb-2">Auto-Ontology &amp; Memory</h3>
+                    <p className="text-sm text-muted-foreground mb-4">Auto-Ontology &amp; Semantic View graph, self-learning query memory, and physically verified Text-to-SQL joins.</p>
+                    <div className="flex items-center gap-1.5 text-xs text-primary bg-primary/10 w-fit px-2.5 py-1 rounded-md font-semibold mt-auto"><Sparkles className="w-3.5 h-3.5" /> Recently added</div>
                   </CardContent>
                 </Card>
               </div>
