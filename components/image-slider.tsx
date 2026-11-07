@@ -9,6 +9,7 @@ const slides = [
     { src: "/screenshot-profiler.png", alt: "Query Plan & Profiler", label: "Query Profiler" },
     { src: "/screenshot-notebook-editor.png", alt: "Notebook Editor with marimo", label: "Notebook Editor" },
     { src: "/screenshot-connections.png", alt: "Database Connections", label: "Connections" },
+    { src: "/screenshot-ontoview.png", alt: "Auto-Ontology & Semantic Network View", label: "Semantic View" },
     { src: "/screenshot-loclo-catalog.png", alt: "Local Hub & Table View", label: "Local Hub" },
     { src: "/screenshot-erd.png", alt: "Entity-Relationship Diagrams", label: "Interactive ERD" },
     { src: "/screenshot-erd-builder.png", alt: "Visual Query Builder via ERD", label: "Visual Query Builder" },
